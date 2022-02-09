@@ -51,11 +51,12 @@ public abstract class TestObjectFactory {
     }
 
     public static SinkEvent testSinkEvent() {
-        SinkEvent sinkEvent = new SinkEvent();
         MachineEvent machineEvent = new MachineEvent();
         machineEvent.setEventId(randomLong());
         machineEvent.setSourceId(randomString());
         machineEvent.setData(Value.bin(new ThriftSerializer<>().serialize("", testSucceededStatusChange())));
+        SinkEvent sinkEvent = new SinkEvent();
+        sinkEvent.setEvent(machineEvent);
         return sinkEvent;
     }
 
