@@ -4,6 +4,7 @@ import dev.vality.fistful.base.EventRange;
 import dev.vality.fistful.withdrawal.ManagementSrv;
 import dev.vality.fistful.withdrawal.WithdrawalState;
 import dev.vality.scrooge.domain.WithdrawalTransaction;
+import dev.vality.scrooge.exception.FistfulException;
 import dev.vality.scrooge.service.TransactionService;
 import dev.vality.scrooge.service.converter.WithdrawalStateToWithdrawalTransactionConverter;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ public class WithdrawalTransactionService implements TransactionService<Withdraw
             WithdrawalState withdrawalState = fistfulClient.get(id, eventRange);
             return converter.convert(withdrawalState);
         } catch (TException e) {
-            throw new RuntimeException(); // TODO add exception
+            throw new FistfulException("WithdrawalTransactionService error call fistful: ", e);
         }
     }
 }

@@ -18,12 +18,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import static org.mockito.Mockito.*;
 
 @KafkaTestcontainer(
-        properties = {
-                "kafka.topic.withdrawal.listener.enabled=true",
-                "kafka.state.cache.size=0"},
-        topicsKeys = {
-                "kafka.topic.withdrawal.id"
-        })
+        properties = "kafka.topic.withdrawal.listener.enabled=true",
+        topicsKeys = "kafka.topic.withdrawal.id")
 @KafkaSpringBootTest
 class WithdrawalListenerTest {
 

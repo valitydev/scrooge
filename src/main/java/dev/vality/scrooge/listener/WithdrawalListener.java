@@ -38,6 +38,7 @@ public class WithdrawalListener {
         withdrawalService.handle(machineEvents);
         ack.acknowledge();
         log.info("WithdrawalListener success committed batch withdrawals: partition={}, offset={}", partition, offset);
+        // TODO exception handling
     }
 }
 

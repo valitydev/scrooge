@@ -1,8 +1,6 @@
 package dev.vality.scrooge;
 
-import dev.vality.fistful.withdrawal.Change;
-import dev.vality.fistful.withdrawal.StatusChange;
-import dev.vality.fistful.withdrawal.TimestampedChange;
+import dev.vality.fistful.withdrawal.*;
 import dev.vality.fistful.withdrawal.status.Status;
 import dev.vality.fistful.withdrawal.status.Succeeded;
 import dev.vality.kafka.common.serialization.ThriftSerializer;
@@ -12,6 +10,7 @@ import dev.vality.machinegun.msgpack.Value;
 import dev.vality.scrooge.dao.domain.tables.pojos.Adapter;
 import dev.vality.scrooge.dao.domain.tables.pojos.Option;
 import dev.vality.scrooge.dao.domain.tables.pojos.Provider;
+import dev.vality.scrooge.domain.WithdrawalTransaction;
 
 import java.util.List;
 import java.util.UUID;
@@ -51,13 +50,18 @@ public abstract class TestObjectFactory {
     }
 
     public static SinkEvent testSinkEvent() {
+        MachineEvent machineEvent = testMachineEvent();
+        SinkEvent sinkEvent = new SinkEvent();
+        sinkEvent.setEvent(machineEvent);
+        return sinkEvent;
+    }
+
+    public static MachineEvent testMachineEvent() {
         MachineEvent machineEvent = new MachineEvent();
         machineEvent.setEventId(randomLong());
         machineEvent.setSourceId(randomString());
         machineEvent.setData(Value.bin(new ThriftSerializer<>().serialize("", testSucceededStatusChange())));
-        SinkEvent sinkEvent = new SinkEvent();
-        sinkEvent.setEvent(machineEvent);
-        return sinkEvent;
+        return machineEvent;
     }
 
     public static TimestampedChange testSucceededStatusChange() {
@@ -68,12 +72,36 @@ public abstract class TestObjectFactory {
                                 Status.succeeded(new Succeeded()))));
     }
 
+    public static WithdrawalState testWithdrawalState() {
+        Route route = new Route();
+        route.setProviderId(randomInt());
+        route.setTerminalId(randomInt());
+        WithdrawalState withdrawalState = new WithdrawalState();
+        withdrawalState.setRoute(route);
+        withdrawalState.setId(randomString());
+        withdrawalState.setDomainRevision(randomLong());
+        return withdrawalState;
+    }
+
+    public static WithdrawalTransaction testWithdrawalTransaction(WithdrawalState withdrawalState) {
+        WithdrawalTransaction transaction = new WithdrawalTransaction();
+        transaction.setWithdrawalId(withdrawalState.getId());
+        transaction.setProviderId(withdrawalState.getRoute().getProviderId());
+        transaction.setTerminalId(withdrawalState.getRoute().getTerminalId());
+        transaction.setDomainVersionId(withdrawalState.getDomainRevision());
+        return transaction;
+    }
+
     public static String randomString() {
         return UUID.randomUUID().toString();
     }
 
     public static Long randomLong() {
         return ThreadLocalRandom.current().nextLong(100);
+    }
+
+    public static Integer randomInt() {
+        return ThreadLocalRandom.current().nextInt(100);
     }
 
 }

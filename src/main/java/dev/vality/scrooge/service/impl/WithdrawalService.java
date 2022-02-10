@@ -10,7 +10,7 @@ import dev.vality.scrooge.domain.WithdrawalTransaction;
 import dev.vality.scrooge.service.BalanceService;
 import dev.vality.scrooge.service.EventService;
 import dev.vality.scrooge.service.TransactionService;
-import dev.vality.sink.common.parser.impl.MachineEventParser;
+import dev.vality.scrooge.service.converter.MachineEventToTimestampedChangeConverter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class WithdrawalService implements EventService {
 
-    private final MachineEventParser<TimestampedChange> parser;
+    private final MachineEventToTimestampedChangeConverter converter;
     private final TransactionService<WithdrawalTransaction> transactionService;
     private final BalanceService<WithdrawalTransaction> balanceService;
 
@@ -37,7 +37,7 @@ public class WithdrawalService implements EventService {
         if (status.isSetSucceeded()) {
             long sequenceId = event.getEventId();
             String withdrawalId = event.getSourceId();
-            log.info("Get success withdrawal status changed, sequenceId={}, withdrawalId={}",
+            log.info("WithdrawalService get success withdrawal status changed, sequenceId={}, withdrawalId={}",
                     sequenceId, withdrawalId);
             WithdrawalTransaction transactionInfo = transactionService.getInfo(withdrawalId);
             balanceService.update(transactionInfo);
@@ -45,7 +45,7 @@ public class WithdrawalService implements EventService {
     }
 
     private Status getStatus(MachineEvent event) {
-        return Optional.ofNullable(parser.parse(event))
+        return Optional.ofNullable(converter.convert(event))
                 .map(TimestampedChange::getChange)
                 .map(Change::getStatusChanged)
                 .map(StatusChange::getStatus)

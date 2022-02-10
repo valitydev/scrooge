@@ -62,3 +62,6 @@ kafka:
 testcontainers:
   kafka:
     tag: 'latest'
+
+account-survey:
+  networkTimeout: 5000
