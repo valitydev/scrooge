@@ -58,8 +58,10 @@ public abstract class TestObjectFactory {
 
     public static MachineEvent testMachineEvent() {
         MachineEvent machineEvent = new MachineEvent();
+        machineEvent.setSourceNs(randomString());
         machineEvent.setEventId(randomLong());
         machineEvent.setSourceId(randomString());
+        machineEvent.setCreatedAt(randomString());
         machineEvent.setData(Value.bin(new ThriftSerializer<>().serialize("", testSucceededStatusChange())));
         return machineEvent;
     }
