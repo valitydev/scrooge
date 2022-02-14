@@ -10,8 +10,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import javax.sql.DataSource;
 
 @TestConfiguration
-@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class,
-        HibernateJpaAutoConfiguration.class})
+@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class,
+        DataSourceTransactionManagerAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 public class ExcludeDataSourceConfiguration {
 
     @MockBean

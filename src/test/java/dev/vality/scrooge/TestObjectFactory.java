@@ -1,5 +1,8 @@
 package dev.vality.scrooge;
 
+import dev.vality.account_balance.AccountReference;
+import dev.vality.account_balance.Balance;
+import dev.vality.account_balance.BalanceResponse;
 import dev.vality.fistful.withdrawal.*;
 import dev.vality.fistful.withdrawal.status.Status;
 import dev.vality.fistful.withdrawal.status.Succeeded;
@@ -10,9 +13,11 @@ import dev.vality.machinegun.msgpack.Value;
 import dev.vality.scrooge.dao.domain.tables.pojos.Adapter;
 import dev.vality.scrooge.dao.domain.tables.pojos.Option;
 import dev.vality.scrooge.dao.domain.tables.pojos.Provider;
+import dev.vality.scrooge.domain.RouteInfo;
 import dev.vality.scrooge.domain.WithdrawalTransaction;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
@@ -85,13 +90,41 @@ public abstract class TestObjectFactory {
         return withdrawalState;
     }
 
-    public static WithdrawalTransaction testWithdrawalTransaction(WithdrawalState withdrawalState) {
+    public static WithdrawalTransaction testWithdrawalTransactionFromState(WithdrawalState withdrawalState) {
         WithdrawalTransaction transaction = new WithdrawalTransaction();
         transaction.setWithdrawalId(withdrawalState.getId());
         transaction.setProviderId(withdrawalState.getRoute().getProviderId());
         transaction.setTerminalId(withdrawalState.getRoute().getTerminalId());
         transaction.setDomainVersionId(withdrawalState.getDomainRevision());
         return transaction;
+    }
+
+    public static WithdrawalTransaction testWithdrawalTransaction() {
+        WithdrawalTransaction transaction = new WithdrawalTransaction();
+        transaction.setWithdrawalId(randomString());
+        transaction.setProviderId(randomInt());
+        transaction.setTerminalId(randomInt());
+        transaction.setDomainVersionId(randomLong());
+        return transaction;
+    }
+
+    public static RouteInfo testRouteInfo() {
+        RouteInfo routeInfo = new RouteInfo();
+        routeInfo.setUrl("http://adapter:8022/v1");
+        routeInfo.setOptions(Map.of(randomString(), randomString()));
+        return routeInfo;
+    }
+
+    public static BalanceResponse testBalanceResponse() {
+        BalanceResponse balanceResponse = new BalanceResponse();
+        Balance balance = new Balance();
+        balance.setAmount(randomLong());
+        balance.setCurrencyCode(randomString());
+        balanceResponse.setBalance(balance);
+        AccountReference accountReference = new AccountReference();
+        accountReference.setId(randomInt());
+        balanceResponse.setAccountReference(accountReference);
+        return balanceResponse;
     }
 
     public static String randomString() {

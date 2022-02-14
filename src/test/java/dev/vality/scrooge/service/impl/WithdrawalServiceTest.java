@@ -2,8 +2,6 @@ package dev.vality.scrooge.service.impl;
 
 import dev.vality.fistful.base.EventRange;
 import dev.vality.fistful.withdrawal.ManagementSrv;
-import dev.vality.fistful.withdrawal.WithdrawalState;
-import dev.vality.machinegun.eventsink.MachineEvent;
 import dev.vality.scrooge.TestObjectFactory;
 import dev.vality.scrooge.domain.WithdrawalTransaction;
 import dev.vality.scrooge.service.BalanceService;
@@ -43,7 +41,7 @@ class WithdrawalServiceTest {
 
     @Test
     void handleWithoutStatusChangeEvent() throws TException {
-        MachineEvent machineEvent = TestObjectFactory.testMachineEvent();
+        var machineEvent = TestObjectFactory.testMachineEvent();
         machineEvent.setData(null);
 
         eventService.handle(List.of(machineEvent));
@@ -54,10 +52,10 @@ class WithdrawalServiceTest {
 
     @Test
     void handleOk() throws TException {
-        MachineEvent machineEvent = TestObjectFactory.testMachineEvent();
-        WithdrawalState withdrawalState = TestObjectFactory.testWithdrawalState();
+        var machineEvent = TestObjectFactory.testMachineEvent();
+        var withdrawalState = TestObjectFactory.testWithdrawalState();
         when(fistfulClient.get(anyString(), any(EventRange.class))).thenReturn(withdrawalState);
-        WithdrawalTransaction expectedTransaction = TestObjectFactory.testWithdrawalTransaction(withdrawalState);
+        var expectedTransaction = TestObjectFactory.testWithdrawalTransactionFromState(withdrawalState);
         doNothing().when(balanceService).update(expectedTransaction);
 
         eventService.handle(List.of(machineEvent));

@@ -7,7 +7,8 @@ import dev.vality.scrooge.domain.BalanceInfo;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Component
@@ -21,9 +22,9 @@ public class BalanceResponseToBalanceInfoConverter implements Converter<BalanceR
         balanceInfo.setCurrency(balance.getCurrencyCode());
         AccountReference accountReference = source.getAccountReference();
         balanceInfo.setAccountId(accountReference.getId());
-        Instant timestamp = Optional.ofNullable(source.getResponseTime())
-                .map(Instant::parse)
-                .orElse(Instant.now());
+        LocalDateTime timestamp = Optional.ofNullable(source.getResponseTime())
+                .map(s -> LocalDateTime.parse(s, DateTimeFormatter.ISO_INSTANT))
+                .orElse(LocalDateTime.now());
         balanceInfo.setTimestamp(timestamp);
         return balanceInfo;
     }
