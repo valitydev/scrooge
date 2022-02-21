@@ -31,14 +31,13 @@ public class WithdrawalListener {
             List<SinkEvent> batch,
             @Header(KafkaHeaders.RECEIVED_PARTITION_ID) int partition,
             @Header(KafkaHeaders.OFFSET) int offset,
-            Acknowledgment ack) throws InterruptedException {
+            Acknowledgment ack) {
         log.info("WithdrawalListener listen withdrawals batch: partition={}, offset={}, batch.size()={}",
                 partition, offset, batch.size());
         List<MachineEvent> machineEvents = batch.stream().map(SinkEvent::getEvent).collect(toList());
         withdrawalService.handle(machineEvents);
         ack.acknowledge();
         log.info("WithdrawalListener success committed batch withdrawals: partition={}, offset={}", partition, offset);
-        // TODO exception handling
     }
 }
 

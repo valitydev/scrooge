@@ -9,7 +9,7 @@ public class BalanceInfo {
 
     private long amount;
     private String currency;
-    private long accountId; // TODO maybe change
+    private long accountId; // TODO maybe change type
     private LocalDateTime timestamp;
 }
 

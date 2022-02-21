@@ -21,8 +21,7 @@ public class WithdrawalTransactionService implements TransactionService<Withdraw
     @Override
     public WithdrawalTransaction getInfo(String id) {
         try {
-            EventRange eventRange = new EventRange(); // TODO is fulfilment mandatory?
-            WithdrawalState withdrawalState = fistfulClient.get(id, eventRange);
+            WithdrawalState withdrawalState = fistfulClient.get(id, new EventRange());
             return converter.convert(withdrawalState);
         } catch (TException e) {
             throw new FistfulException("WithdrawalTransactionService error call fistful: ", e);

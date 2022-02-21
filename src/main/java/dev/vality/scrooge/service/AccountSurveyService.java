@@ -1,9 +1,9 @@
 package dev.vality.scrooge.service;
 
+import dev.vality.scrooge.domain.AdapterInfo;
 import dev.vality.scrooge.domain.BalanceInfo;
-import dev.vality.scrooge.domain.RouteInfo;
 
 public interface AccountSurveyService {
 
-    BalanceInfo getBalance(RouteInfo routeInfo);
+    BalanceInfo getBalance(AdapterInfo adapterInfo);
 }

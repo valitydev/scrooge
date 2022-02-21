@@ -13,9 +13,9 @@ import dev.vality.machinegun.msgpack.Value;
 import dev.vality.scrooge.dao.domain.tables.pojos.Adapter;
 import dev.vality.scrooge.dao.domain.tables.pojos.Option;
 import dev.vality.scrooge.dao.domain.tables.pojos.Provider;
-import dev.vality.scrooge.domain.RouteInfo;
-import dev.vality.scrooge.domain.WithdrawalTransaction;
+import dev.vality.scrooge.domain.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -110,9 +110,40 @@ public abstract class TestObjectFactory {
 
     public static RouteInfo testRouteInfo() {
         RouteInfo routeInfo = new RouteInfo();
-        routeInfo.setUrl("http://adapter:8022/v1");
-        routeInfo.setOptions(Map.of(randomString(), randomString()));
+        routeInfo.setAdapterInfo(testAdapterInfo());
+        routeInfo.setProviderInfo(testProviderInfo());
+        routeInfo.setTerminalInfo(testTerminalInfo());
         return routeInfo;
+    }
+
+    public static AdapterInfo testAdapterInfo() {
+        AdapterInfo adapterInfo = new AdapterInfo();
+        adapterInfo.setUrl("http://adapter:8022/v1");
+        adapterInfo.setOptions(Map.of(randomString(), randomString()));
+        return adapterInfo;
+    }
+
+    public static ProviderInfo testProviderInfo() {
+        ProviderInfo providerInfo = new ProviderInfo();
+        providerInfo.setName(randomString());
+        providerInfo.setDescription(randomString());
+        return providerInfo;
+    }
+
+    public static TerminalInfo testTerminalInfo() {
+        TerminalInfo terminalInfo = new TerminalInfo();
+        terminalInfo.setName(randomString());
+        terminalInfo.setDescription(randomString());
+        return terminalInfo;
+    }
+
+    public static BalanceInfo testBalanceInfo() {
+        BalanceInfo balanceInfo = new BalanceInfo();
+        balanceInfo.setTimestamp(LocalDateTime.now());
+        balanceInfo.setCurrency("RUB");
+        balanceInfo.setAmount(randomLong());
+        balanceInfo.setAccountId(randomLong());
+        return balanceInfo;
     }
 
     public static BalanceResponse testBalanceResponse() {

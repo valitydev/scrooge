@@ -3,8 +3,8 @@ package dev.vality.scrooge.service.impl;
 import dev.vality.account_balance.AccountServiceSrv;
 import dev.vality.account_balance.BalanceRequest;
 import dev.vality.account_balance.BalanceResponse;
+import dev.vality.scrooge.domain.AdapterInfo;
 import dev.vality.scrooge.domain.BalanceInfo;
-import dev.vality.scrooge.domain.RouteInfo;
 import dev.vality.scrooge.service.AccountSurveyService;
 import dev.vality.scrooge.service.ClientBuilder;
 import dev.vality.scrooge.service.converter.BalanceResponseToBalanceInfoConverter;
@@ -22,25 +22,16 @@ public class AccountSurveyServiceImpl implements AccountSurveyService {
     private final BalanceResponseToBalanceInfoConverter converter;
 
     @Override
-    public BalanceInfo getBalance(RouteInfo routeInfo) {
+    public BalanceInfo getBalance(AdapterInfo adapterInfo) {
         try {
-            AccountServiceSrv.Iface adapterClient = clientBuilder.build(routeInfo.getUrl());
-            BalanceRequest request = new BalanceRequest();
-            // TODO fill request
-            request.setOptions(routeInfo.getOptions());
+            AccountServiceSrv.Iface adapterClient = clientBuilder.build(adapterInfo.getUrl());
+            BalanceRequest request = new BalanceRequest()
+                    .setOptions(adapterInfo.getOptions());
             BalanceResponse balance = adapterClient.getBalance(request);
             return converter.convert(balance);
         } catch (TException e) {
-            log.error("AccountSurveyServiceImpl error call adapter with url={}", routeInfo.getUrl(), e);
+            log.error("AccountSurveyServiceImpl error call adapter with url={}", adapterInfo.getUrl(), e);
             return null;
         }
     }
-
-//    private AccountServiceSrv.Iface buildClient(String url) {
-//        URI adapterUri = URI.create(url);
-//        return new THSpawnClientBuilder()
-//                .withNetworkTimeout(networkTimeout)
-//                .withAddress(adapterUri)
-//                .build(AccountServiceSrv.Iface.class);
-//    }
 }

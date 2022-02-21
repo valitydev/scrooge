@@ -29,7 +29,9 @@ public class WithdrawalService implements EventService {
 
     @Override
     public void handle(List<MachineEvent> events) {
-        events.forEach(this::processEvent);
+        for (MachineEvent event : events) {
+            processEvent(event);
+        }
     }
 
     private void processEvent(MachineEvent event) {
