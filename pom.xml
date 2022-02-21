@@ -168,12 +168,6 @@
             <artifactId>testcontainers-annotations</artifactId>
             <version>${testcontainers.annotations.version}</version>
             <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.rbkmoney</groupId>
-                    <artifactId>machinegun-proto</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
     </dependencies>
 
