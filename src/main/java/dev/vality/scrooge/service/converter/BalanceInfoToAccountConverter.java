@@ -10,7 +10,7 @@ public class BalanceInfoToAccountConverter {
     public Account convert(BalanceInfo source, Integer providerId) {
         Account account = new Account();
         account.setCurrency(source.getCurrency());
-        account.setNumber(String.valueOf(source.getAccountId()));
+        account.setNumber(source.getAccountId());
         account.setProviderId(providerId);
         return account;
     }

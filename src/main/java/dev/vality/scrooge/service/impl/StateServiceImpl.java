@@ -9,6 +9,7 @@ import dev.vality.scrooge.service.converter.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class StateServiceImpl implements StateService {
     private final AdapterInfoToOptionConverter optionConverter;
 
     @Override
+    @Transactional
     public void update(RouteInfo routeInfo, BalanceInfo balanceInfo) {
         log.info("Update state for routeInfo={}, balanceInfo={}", routeInfo, balanceInfo);
         Provider provider = providerConverter.convert(routeInfo.getProviderInfo());

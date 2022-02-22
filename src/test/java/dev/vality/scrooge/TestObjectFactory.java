@@ -142,7 +142,7 @@ public abstract class TestObjectFactory {
         balanceInfo.setTimestamp(LocalDateTime.now());
         balanceInfo.setCurrency("RUB");
         balanceInfo.setAmount(randomLong());
-        balanceInfo.setAccountId(randomLong());
+        balanceInfo.setAccountId(randomString());
         return balanceInfo;
     }
 

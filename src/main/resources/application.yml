@@ -7,8 +7,8 @@ management:
   server:
     port: '@management.port@'
   metrics:
-      prometheus:
-        enabled: true
+    prometheus:
+      enabled: true
   endpoint:
     health:
       show-details: always
@@ -27,6 +27,10 @@ spring:
   output:
     ansi:
       enabled: always
+  cache:
+    cache-names: adapters
+    caffeine:
+      spec: maximumSize=200,expireAfterAccess=1d
 info:
   version: '@project.version@'
   stage: dev
