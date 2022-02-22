@@ -17,6 +17,6 @@ Scrooge слушает топик mg-events-ff-withdrawal. При считыва
 
 Схема взаимодействия:
 
-![scrooge_balance.svg](doc/scrooge_balance_v3.svg)
+![scrooge_balance.svg](doc/scrooge_balance_v4.svg)
 
 Протокол взаимодействия с адаптерами описан [тут](https://github.com/valitydev/account-balance-proto).

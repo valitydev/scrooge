@@ -11,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import static dev.vality.scrooge.dao.domain.tables.Provider.PROVIDER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @PostgresqlJooqTest
 @ContextConfiguration(classes = {ProviderDaoImpl.class})
@@ -32,8 +33,9 @@ class ProviderDaoImplTest {
     void save() {
         Provider provider = TestObjectFactory.testProvider();
 
-        providerDao.save(provider);
+        Provider savedProvider = providerDao.save(provider);
 
+        assertNotNull(savedProvider.getId());
         assertEquals(1, dslContext.fetchCount(PROVIDER));
     }
 }

@@ -2,6 +2,7 @@ package dev.vality.scrooge.dao;
 
 import dev.vality.scrooge.dao.domain.tables.pojos.Adapter;
 import org.jooq.Query;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
@@ -16,12 +17,16 @@ public class AdapterDaoImpl extends AbstractDao implements AdapterDao {
     }
 
     @Override
-    public void save(Adapter adapter) {
+    public Adapter save(Adapter adapter) {
         Query query = getDslContext().insertInto(ADAPTER)
                 .set(getDslContext().newRecord(ADAPTER, adapter))
                 .onConflict(ADAPTER.ID)
                 .doUpdate()
-                .set(getDslContext().newRecord(ADAPTER, adapter));
-        execute(query);
+                .set(getDslContext().newRecord(ADAPTER, adapter))
+                .returning(ADAPTER.ID);
+        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+        execute(query, keyHolder);
+        adapter.setId(keyHolder.getKey().longValue());
+        return adapter;
     }
 }

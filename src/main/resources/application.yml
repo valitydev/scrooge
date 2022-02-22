@@ -7,8 +7,8 @@ management:
   server:
     port: '@management.port@'
   metrics:
-      prometheus:
-        enabled: true
+    prometheus:
+      enabled: true
   endpoint:
     health:
       show-details: always
@@ -27,6 +27,45 @@ spring:
   output:
     ansi:
       enabled: always
+  cache:
+    cache-names: adapters
+    caffeine:
+      spec: maximumSize=200,expireAfterAccess=1d
 info:
   version: '@project.version@'
   stage: dev
+
+fistful:
+  url: http://fistful:8022/v1/withdrawal
+  networkTimeout: 5000
+
+kafka:
+  bootstrap-servers: localhost:9092
+  client-id: scrooge
+  consumer:
+    group-id: scrooge-listner
+    max-poll-interval-ms: 60000
+    max-session-timeout-ms: 60000
+  ssl:
+    enabled: false
+    key-store-type: changeit
+    key-store-location: changeit
+    key-store-password: changeit
+    key-password: changeit
+    trust-store-type: changeit
+    trust-store-location: changeit
+    trust-store-password: changeit
+  topic:
+    withdrawal:
+      id: mg-events-ff-withdrawal
+      listener:
+        enabled: false
+        max-poll-records: 50
+        concurrency: 7
+
+testcontainers:
+  kafka:
+    tag: '6.2.0'
+
+account-survey:
+  networkTimeout: 5000

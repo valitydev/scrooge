@@ -6,7 +6,7 @@
     <parent>
         <groupId>dev.vality</groupId>
         <artifactId>service-parent-pom</artifactId>
-        <version>1.0.8</version>
+        <version>1.0.10</version>
     </parent>
 
     <artifactId>scrooge</artifactId>
@@ -31,7 +31,10 @@
         <db.password>postgres</db.password>
         <db.schema>scrooge</db.schema>
         <accout.balance.proto.version>1.7-ff1c05a</accout.balance.proto.version>
-        <testcontainers.annotations.version>1.3.2</testcontainers.annotations.version>
+        <testcontainers.annotations.version>1.4.0</testcontainers.annotations.version>
+        <fistful-proto.version>1.134-cfaaf3d</fistful-proto.version>
+        <machinegun-proto.version>1.24-f533965</machinegun-proto.version>
+        <sink-common-lib.version>0.0.1</sink-common-lib.version>
     </properties>
 
     <dependencies>
@@ -53,6 +56,31 @@
         <dependency>
             <groupId>dev.vality</groupId>
             <artifactId>db-common-lib</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dev.vality</groupId>
+            <artifactId>fistful-proto</artifactId>
+            <version>${fistful-proto.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>dev.vality</groupId>
+            <artifactId>kafka-common-lib</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dev.vality</groupId>
+            <artifactId>machinegun-proto</artifactId>
+            <version>${machinegun-proto.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>dev.vality</groupId>
+            <artifactId>sink-common-lib</artifactId>
+            <version>${sink-common-lib.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>dev.vality</groupId>
+                    <artifactId>machinegun-proto</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!--spring-->
@@ -80,8 +108,16 @@
             <optional>true</optional>
         </dependency>
         <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jooq</artifactId>
         </dependency>
 
         <!--third party-->
@@ -115,8 +151,8 @@
             <artifactId>postgresql</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.jooq</groupId>
-            <artifactId>jooq</artifactId>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
         </dependency>
 
         <!--test-->
@@ -232,9 +268,9 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>com.rbkmoney.maven.plugins</groupId>
+                <groupId>dev.vality.maven.plugins</groupId>
                 <artifactId>pg-embedded-plugin</artifactId>
-                <version>1.8</version>
+                <version>1.0.1</version>
                 <configuration>
                     <port>${db.port}</port>
                     <dbName>${db.name}</dbName>

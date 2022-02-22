@@ -4,7 +4,7 @@ import dev.vality.scrooge.dao.domain.tables.pojos.Adapter;
 
 public interface AdapterDao {
 
-    void save(Adapter adapter);
+    Adapter save(Adapter adapter);
 
 }
 
