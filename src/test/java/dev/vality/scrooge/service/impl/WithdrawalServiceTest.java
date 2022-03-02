@@ -65,7 +65,7 @@ class WithdrawalServiceTest {
     }
 
     @Test
-    void handleException() throws TException {
+    void handleWithFistfulException() throws TException {
         var machineEvent = TestObjectFactory.testMachineEvent();
         when(fistfulClient.get(anyString(), any(EventRange.class))).thenThrow(new TException("Error call"));
 
