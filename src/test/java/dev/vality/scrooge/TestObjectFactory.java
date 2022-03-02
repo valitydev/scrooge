@@ -3,6 +3,9 @@ package dev.vality.scrooge;
 import dev.vality.account_balance.AccountReference;
 import dev.vality.account_balance.Balance;
 import dev.vality.account_balance.BalanceResponse;
+import dev.vality.damsel.domain.ProxyDefinition;
+import dev.vality.damsel.payment_processing.ProviderDetails;
+import dev.vality.damsel.payment_processing.ProviderTerminal;
 import dev.vality.fistful.withdrawal.*;
 import dev.vality.fistful.withdrawal.status.Status;
 import dev.vality.fistful.withdrawal.status.Succeeded;
@@ -156,6 +159,19 @@ public abstract class TestObjectFactory {
         accountReference.setId(randomInt());
         balanceResponse.setAccountReference(accountReference);
         return balanceResponse;
+    }
+
+    public static ProviderTerminal testProviderTerminal() {
+        return new ProviderTerminal()
+                .setName(randomString())
+                .setDescription(randomString())
+                .setProvider(new ProviderDetails()
+                        .setName(randomString())
+                        .setDescription(randomString())
+                )
+                .setProxy(new ProxyDefinition()
+                        .setUrl("http://prt-mngmt:8022/v1")
+                        .setOptions(Map.of(randomString(), randomString())));
     }
 
     public static String randomString() {

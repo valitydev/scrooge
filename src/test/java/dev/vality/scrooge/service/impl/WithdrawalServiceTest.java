@@ -4,6 +4,7 @@ import dev.vality.fistful.base.EventRange;
 import dev.vality.fistful.withdrawal.ManagementSrv;
 import dev.vality.scrooge.TestObjectFactory;
 import dev.vality.scrooge.domain.WithdrawalTransaction;
+import dev.vality.scrooge.exception.FistfulException;
 import dev.vality.scrooge.service.BalanceService;
 import dev.vality.scrooge.service.EventService;
 import dev.vality.scrooge.service.converter.MachineEventToTimestampedChangeConverter;
@@ -20,6 +21,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
@@ -40,6 +43,17 @@ class WithdrawalServiceTest {
     private ManagementSrv.Iface fistfulClient;
 
     @Test
+    void handleWithException() throws TException {
+        var machineEvent = TestObjectFactory.testMachineEvent();
+        machineEvent.setData(null);
+
+        eventService.handle(List.of(machineEvent));
+
+        verify(fistfulClient, never()).get(machineEvent.getSourceId(), new EventRange());
+        verify(balanceService, never()).update(any(WithdrawalTransaction.class));
+    }
+
+    @Test
     void handleWithoutStatusChangeEvent() throws TException {
         var machineEvent = TestObjectFactory.testMachineEvent();
         machineEvent.setData(null);
@@ -48,6 +62,17 @@ class WithdrawalServiceTest {
 
         verify(fistfulClient, never()).get(machineEvent.getSourceId(), new EventRange());
         verify(balanceService, never()).update(any(WithdrawalTransaction.class));
+    }
+
+    @Test
+    void handleException() throws TException {
+        var machineEvent = TestObjectFactory.testMachineEvent();
+        when(fistfulClient.get(anyString(), any(EventRange.class))).thenThrow(new TException("Error call"));
+
+        FistfulException fistfulException =
+                assertThrows(FistfulException.class, () -> eventService.handle(List.of(machineEvent)));
+
+        assertEquals("WithdrawalTransactionService error call fistful: ", fistfulException.getMessage());
     }
 
     @Test

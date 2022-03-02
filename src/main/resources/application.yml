@@ -35,9 +35,15 @@ info:
   version: '@project.version@'
   stage: dev
 
-fistful:
-  url: http://fistful:8022/v1/withdrawal
-  networkTimeout: 5000
+service:
+  fistful:
+    url: http://fistful:8022/v1/withdrawal
+    networkTimeout: 5000
+  party-management:
+    url: http://hellgate:8022/v1/processing/partymgmt
+    networkTimeout: 5000
+  adapter:
+    networkTimeout: 5000
 
 kafka:
   bootstrap-servers: localhost:9092
