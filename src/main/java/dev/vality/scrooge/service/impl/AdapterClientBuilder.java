@@ -12,7 +12,7 @@ import java.net.URI;
 @Component
 public class AdapterClientBuilder implements ClientBuilder<AccountServiceSrv.Iface> {
 
-    @Value("${adapter.networkTimeout}")
+    @Value("${adapter-client.networkTimeout}")
     private int networkTimeout;
 
     @Cacheable(value = "adapters", key = "#url")
