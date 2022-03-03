@@ -10,9 +10,11 @@ import dev.vality.scrooge.exception.PartyManagementException;
 import dev.vality.scrooge.service.RouteService;
 import dev.vality.scrooge.service.converter.ProviderTerminalToRouteInfoConverter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.thrift.TException;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class WithdrawalRouteService implements RouteService<WithdrawalTransaction> {
@@ -30,6 +32,8 @@ public class WithdrawalRouteService implements RouteService<WithdrawalTransactio
                     partyManagementClient.computeProviderTerminal(terminalRef, domainVersionId, new Varset());
             return converter.convert(providerTerminal);
         } catch (TException e) {
+            log.error("WithdrawalRouteService error get terminal with id={}, version={}",
+                    transaction.getTerminalId(), transaction.getDomainVersionId());
             throw new PartyManagementException("WithdrawalRouteService error call party-management: ", e);
         }
     }

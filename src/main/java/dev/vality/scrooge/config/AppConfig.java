@@ -14,8 +14,8 @@ import java.io.IOException;
 public class AppConfig {
 
     @Bean
-    public ManagementSrv.Iface fistfulClient(@Value("${service.fistful.url}") Resource resource,
-                                             @Value("${service.fistful.networkTimeout}") int networkTimeout)
+    public ManagementSrv.Iface fistfulClient(@Value("${fistful.url}") Resource resource,
+                                             @Value("${fistful.networkTimeout}") int networkTimeout)
             throws IOException {
         return new THSpawnClientBuilder()
                 .withNetworkTimeout(networkTimeout)
@@ -25,8 +25,8 @@ public class AppConfig {
 
     @Bean
     public PartyManagementSrv.Iface partyManagementClient(
-            @Value("${service.party-management.url}") Resource resource,
-            @Value("${service.party-management.networkTimeout}") int networkTimeout)
+            @Value("${party-management.url}") Resource resource,
+            @Value("${party-management.networkTimeout}") int networkTimeout)
             throws IOException {
         return new THSpawnClientBuilder()
                 .withNetworkTimeout(networkTimeout)
