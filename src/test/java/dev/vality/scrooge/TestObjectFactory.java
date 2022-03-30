@@ -156,7 +156,7 @@ public abstract class TestObjectFactory {
         balance.setCurrencyCode(randomString());
         balanceResponse.setBalance(balance);
         AccountReference accountReference = new AccountReference();
-        accountReference.setId(randomInt());
+        accountReference.setId(randomString());
         balanceResponse.setAccountReference(accountReference);
         return balanceResponse;
     }
