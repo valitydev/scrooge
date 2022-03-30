@@ -30,7 +30,7 @@
         <db.user>postgres</db.user>
         <db.password>postgres</db.password>
         <db.schema>scrooge</db.schema>
-        <accout.balance.proto.version>1.7-ff1c05a</accout.balance.proto.version>
+        <accout.balance.proto.version>1.12-61ea81e</accout.balance.proto.version>
         <testcontainers.annotations.version>1.4.0</testcontainers.annotations.version>
         <fistful-proto.version>1.134-cfaaf3d</fistful-proto.version>
         <machinegun-proto.version>1.24-f533965</machinegun-proto.version>

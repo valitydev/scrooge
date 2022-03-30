@@ -21,7 +21,7 @@ public class BalanceResponseToBalanceInfoConverter implements Converter<BalanceR
         balanceInfo.setAmount(balance.getAmount());
         balanceInfo.setCurrency(balance.getCurrencyCode());
         AccountReference accountReference = source.getAccountReference();
-        balanceInfo.setAccountId(String.valueOf(accountReference.getId()));
+        balanceInfo.setAccountId(accountReference.getId());
         LocalDateTime timestamp = Optional.ofNullable(source.getResponseTime())
                 .map(s -> LocalDateTime.parse(s, DateTimeFormatter.ISO_INSTANT))
                 .orElse(LocalDateTime.now());
