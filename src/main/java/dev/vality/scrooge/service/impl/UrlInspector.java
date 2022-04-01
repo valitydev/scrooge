@@ -3,13 +3,13 @@ package dev.vality.scrooge.service.impl;
 import dev.vality.scrooge.config.properties.AdapterClientProperties;
 import dev.vality.scrooge.service.Inspector;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Set;
 
-@Service
+@Component
 @RequiredArgsConstructor
 public class UrlInspector implements Inspector<String> {
 

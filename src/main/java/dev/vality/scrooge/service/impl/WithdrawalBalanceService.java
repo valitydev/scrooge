@@ -23,7 +23,7 @@ public class WithdrawalBalanceService implements BalanceService<WithdrawalTransa
     public void update(WithdrawalTransaction transaction) {
         RouteInfo routeInfo = routeService.get(transaction);
         AdapterInfo adapterInfo = routeInfo.getAdapterInfo();
-        if (urlInspector.isSuitable(adapterInfo.getUrl())) {
+        if (!urlInspector.isSuitable(adapterInfo.getUrl())) {
             return;
         }
         BalanceInfo balanceInfo = accountSurveyService.getBalance(adapterInfo);
