@@ -170,7 +170,7 @@ public abstract class TestObjectFactory {
                         .setDescription(randomString())
                 )
                 .setProxy(new ProxyDefinition()
-                        .setUrl("http://prt-mngmt:8022/v1")
+                        .setUrl("http://adapter-paybox:8022/v1")
                         .setOptions(Map.of(randomString(), randomString())));
     }
 

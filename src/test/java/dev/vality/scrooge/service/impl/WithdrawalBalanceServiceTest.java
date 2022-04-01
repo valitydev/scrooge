@@ -6,7 +6,6 @@ import dev.vality.damsel.domain.TerminalRef;
 import dev.vality.damsel.payment_processing.PartyManagementSrv;
 import dev.vality.damsel.payment_processing.Varset;
 import dev.vality.scrooge.TestObjectFactory;
-import dev.vality.scrooge.config.properties.AdapterClientProperties;
 import dev.vality.scrooge.domain.BalanceInfo;
 import dev.vality.scrooge.domain.RouteInfo;
 import dev.vality.scrooge.domain.WithdrawalTransaction;
@@ -23,6 +22,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -32,7 +32,10 @@ import static org.mockito.Mockito.*;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {WithdrawalBalanceService.class, AccountSurveyServiceImpl.class,
         BalanceResponseToBalanceInfoConverter.class, WithdrawalRouteService.class,
-        ProviderTerminalToRouteInfoConverter.class, UrlInspector.class, AdapterClientProperties.class})
+        ProviderTerminalToRouteInfoConverter.class, UrlInspector.class})
+@TestPropertySource(properties = {
+        "adapter-client.hosts=adapter-paybox,proxy-mocketbank,adapter-onevision-payout",
+})
 class WithdrawalBalanceServiceTest {
 
     @Autowired
@@ -84,6 +87,7 @@ class WithdrawalBalanceServiceTest {
     @Test
     void updateWithNotAvailableUrl() throws TException {
         var providerTerminal = TestObjectFactory.testProviderTerminal();
+        providerTerminal.getProxy().setUrl("http://test:8022/v1");
         when(partyManagementClient.computeProviderTerminal(any(TerminalRef.class), anyLong(), any(Varset.class)))
                 .thenReturn(providerTerminal);
         var transaction = TestObjectFactory.testWithdrawalTransaction();

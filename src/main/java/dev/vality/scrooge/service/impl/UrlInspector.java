@@ -1,8 +1,8 @@
 package dev.vality.scrooge.service.impl;
 
-import dev.vality.scrooge.config.properties.AdapterClientProperties;
 import dev.vality.scrooge.service.Inspector;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.net.MalformedURLException;
@@ -13,15 +13,15 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class UrlInspector implements Inspector<String> {
 
-    private final AdapterClientProperties properties;
+    @Value("#{'${adapter-client.hosts}'.split(',')}")
+    private final Set<String> hosts;
 
     @Override
     public boolean isSuitable(String urlString) {
         try {
             URL url = new URL(urlString);
             String host = url.getHost();
-            Set<String> availableHosts = properties.getAvailableHosts();
-            return availableHosts.contains(host);
+            return hosts.contains(host);
         } catch (MalformedURLException e) {
             throw new IllegalArgumentException("Invalid url for adapter " + urlString);
         }
