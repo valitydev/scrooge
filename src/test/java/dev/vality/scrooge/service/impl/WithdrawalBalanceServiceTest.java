@@ -6,6 +6,7 @@ import dev.vality.damsel.domain.TerminalRef;
 import dev.vality.damsel.payment_processing.PartyManagementSrv;
 import dev.vality.damsel.payment_processing.Varset;
 import dev.vality.scrooge.TestObjectFactory;
+import dev.vality.scrooge.config.properties.AdapterClientProperties;
 import dev.vality.scrooge.domain.BalanceInfo;
 import dev.vality.scrooge.domain.RouteInfo;
 import dev.vality.scrooge.domain.WithdrawalTransaction;
@@ -31,7 +32,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {WithdrawalBalanceService.class, AccountSurveyServiceImpl.class,
         BalanceResponseToBalanceInfoConverter.class, WithdrawalRouteService.class,
-        ProviderTerminalToRouteInfoConverter.class, UrlInspector.class})
+        ProviderTerminalToRouteInfoConverter.class, UrlInspector.class, AdapterClientProperties.class})
 class WithdrawalBalanceServiceTest {
 
     @Autowired
