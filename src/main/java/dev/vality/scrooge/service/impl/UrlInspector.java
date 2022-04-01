@@ -1,7 +1,6 @@
 package dev.vality.scrooge.service.impl;
 
 import dev.vality.scrooge.service.Inspector;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -10,11 +9,10 @@ import java.net.URL;
 import java.util.Set;
 
 @Component
-@RequiredArgsConstructor
 public class UrlInspector implements Inspector<String> {
 
     @Value("#{'${adapter-client.hosts}'.split(',')}")
-    private final Set<String> hosts;
+    private Set<String> hosts;
 
     @Override
     public boolean isSuitable(String urlString) {

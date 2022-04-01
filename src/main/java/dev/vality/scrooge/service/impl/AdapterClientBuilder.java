@@ -17,7 +17,7 @@ public class AdapterClientBuilder implements ClientBuilder<AccountServiceSrv.Ifa
     private static final String BALANCE_PATH = "/balance";
 
     @Value("${adapter-client.networkTimeout}")
-    private final int networkTimeout;
+    private int networkTimeout;
 
     @Cacheable(value = "adapters", key = "#url")
     @Override
