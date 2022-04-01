@@ -34,8 +34,7 @@ import static org.mockito.Mockito.*;
         BalanceResponseToBalanceInfoConverter.class, WithdrawalRouteService.class,
         ProviderTerminalToRouteInfoConverter.class, UrlInspector.class})
 @TestPropertySource(properties = {
-        "adapter-client.hosts=adapter-paybox,proxy-mocketbank,adapter-onevision-payout",
-})
+        "adapter-client.hosts=adapter-paybox,proxy-mocketbank,adapter-onevision-payout"})
 class WithdrawalBalanceServiceTest {
 
     @Autowired
@@ -92,7 +91,10 @@ class WithdrawalBalanceServiceTest {
                 .thenReturn(providerTerminal);
         var transaction = TestObjectFactory.testWithdrawalTransaction();
 
+        balanceService.update(transaction);
+
         verify(clientBuilder, never()).build(anyString());
+        verify(accountService, never()).getBalance(any(BalanceRequest.class));
     }
 
     @Test
