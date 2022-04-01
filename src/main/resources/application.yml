@@ -43,6 +43,7 @@ party-management:
   url: http://hellgate:8022/v1/processing/partymgmt
   networkTimeout: 5000
 adapter-client:
+  available-host: adapter-paybox, proxy-mocketbank, adapter-onevision-payout
   networkTimeout: 5000
 
 kafka:

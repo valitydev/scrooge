@@ -66,6 +66,31 @@ class WithdrawalBalanceServiceTest {
     }
 
     @Test
+    void updateWithIncorrectUrl() throws TException {
+        var providerTerminal = TestObjectFactory.testProviderTerminal();
+        String incorrectUrl = "test";
+        providerTerminal.getProxy().setUrl(incorrectUrl);
+        when(partyManagementClient.computeProviderTerminal(any(TerminalRef.class), anyLong(), any(Varset.class)))
+                .thenReturn(providerTerminal);
+        var transaction = TestObjectFactory.testWithdrawalTransaction();
+
+        IllegalArgumentException exception =
+                assertThrows(IllegalArgumentException.class, () -> balanceService.update(transaction));
+
+        assertEquals("Invalid url for adapter " + incorrectUrl, exception.getMessage());
+    }
+
+    @Test
+    void updateWithNotAvailableUrl() throws TException {
+        var providerTerminal = TestObjectFactory.testProviderTerminal();
+        when(partyManagementClient.computeProviderTerminal(any(TerminalRef.class), anyLong(), any(Varset.class)))
+                .thenReturn(providerTerminal);
+        var transaction = TestObjectFactory.testWithdrawalTransaction();
+
+        verify(clientBuilder, never()).build(anyString());
+    }
+
+    @Test
     void updateWithAdapterException() throws TException {
         var providerTerminal = TestObjectFactory.testProviderTerminal();
         when(partyManagementClient.computeProviderTerminal(any(TerminalRef.class), anyLong(), any(Varset.class)))

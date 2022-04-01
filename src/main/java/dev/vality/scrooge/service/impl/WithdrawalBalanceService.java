@@ -1,12 +1,10 @@
 package dev.vality.scrooge.service.impl;
 
+import dev.vality.scrooge.domain.AdapterInfo;
 import dev.vality.scrooge.domain.BalanceInfo;
 import dev.vality.scrooge.domain.RouteInfo;
 import dev.vality.scrooge.domain.WithdrawalTransaction;
-import dev.vality.scrooge.service.AccountSurveyService;
-import dev.vality.scrooge.service.BalanceService;
-import dev.vality.scrooge.service.RouteService;
-import dev.vality.scrooge.service.StateService;
+import dev.vality.scrooge.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +17,16 @@ public class WithdrawalBalanceService implements BalanceService<WithdrawalTransa
     private final RouteService<WithdrawalTransaction> routeService;
     private final AccountSurveyService accountSurveyService;
     private final StateService stateService;
+    private final Inspector<String> urlInspector;
 
     @Override
     public void update(WithdrawalTransaction transaction) {
         RouteInfo routeInfo = routeService.get(transaction);
-        BalanceInfo balanceInfo = accountSurveyService.getBalance(routeInfo.getAdapterInfo());
+        AdapterInfo adapterInfo = routeInfo.getAdapterInfo();
+        if (urlInspector.isSuitable(adapterInfo.getUrl())) {
+            return;
+        }
+        BalanceInfo balanceInfo = accountSurveyService.getBalance(adapterInfo);
         if (Objects.nonNull(balanceInfo)) {
             stateService.update(routeInfo, balanceInfo);
         }
