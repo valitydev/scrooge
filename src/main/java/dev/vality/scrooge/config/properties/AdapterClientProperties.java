@@ -13,6 +13,6 @@ import java.util.Set;
 @ConfigurationProperties(prefix = "adapter-client")
 public class AdapterClientProperties {
 
-    private Set<String> availableHost;
+    private Set<String> availableHosts;
     private int networkTimeout;
 }

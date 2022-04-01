@@ -20,7 +20,7 @@ public class UrlInspector implements Inspector<String> {
         try {
             URL url = new URL(urlString);
             String host = url.getHost();
-            Set<String> availableHosts = properties.getAvailableHost();
+            Set<String> availableHosts = properties.getAvailableHosts();
             return availableHosts.contains(host);
         } catch (MalformedURLException e) {
             throw new IllegalArgumentException("Invalid url for adapter " + urlString);
