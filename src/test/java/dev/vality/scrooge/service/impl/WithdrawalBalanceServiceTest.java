@@ -31,7 +31,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {WithdrawalBalanceService.class, AccountSurveyServiceImpl.class,
         BalanceResponseToBalanceInfoConverter.class, WithdrawalRouteService.class,
-        ProviderTerminalToRouteInfoConverter.class})
+        ProviderTerminalToRouteInfoConverter.class, UrlInspector.class})
 class WithdrawalBalanceServiceTest {
 
     @Autowired
