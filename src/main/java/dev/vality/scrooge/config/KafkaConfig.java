@@ -23,7 +23,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.apache.kafka.clients.consumer.OffsetResetStrategy.EARLIEST;
+import static org.apache.kafka.clients.consumer.OffsetResetStrategy.LATEST;
 
 @EnableKafka
 @Configuration
@@ -69,7 +69,7 @@ public class KafkaConfig {
         properties.put(ConsumerConfig.CLIENT_ID_CONFIG, clientId);
         properties.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, withdrawalMaxPollRecords);
         properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        properties.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, EARLIEST.name().toLowerCase());
+        properties.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, LATEST.name().toLowerCase());
         properties.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);
         properties.put(ConsumerConfig.MAX_POLL_INTERVAL_MS_CONFIG, consumerProperties.getMaxPollIntervalMs());
         properties.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, consumerProperties.getMaxSessionTimeoutMs());
