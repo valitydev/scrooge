@@ -34,7 +34,7 @@ public class StateServiceImpl implements StateService {
     @Override
     @Transactional
     public void update(RouteInfo routeInfo, BalanceInfo balanceInfo) {
-        log.info("Update state for routeInfo={}, balanceInfo={}", routeInfo, balanceInfo);
+        log.info("Update state for routeInfo: {}, balanceInfo: {}", routeInfo, balanceInfo);
         Provider provider = providerConverter.convert(routeInfo.getProviderInfo());
         Provider savedProvider = providerDao.save(provider);
         Terminal terminal = terminalConverter.convert(routeInfo.getTerminalInfo(), savedProvider.getId());
@@ -47,5 +47,7 @@ public class StateServiceImpl implements StateService {
         Account savedAccount = accountDao.save(account);
         Balance balance = balanceConverter.convert(balanceInfo, savedAccount.getId());
         balanceDao.save(balance);
+        log.info("Success update state for terminal: {}, account: {}", routeInfo.getTerminalInfo().getId(),
+                balanceInfo.getAccountId());
     }
 }

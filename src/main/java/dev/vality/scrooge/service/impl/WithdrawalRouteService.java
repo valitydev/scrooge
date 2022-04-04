@@ -25,12 +25,15 @@ public class WithdrawalRouteService implements RouteService<WithdrawalTransactio
     @Override
     public RouteInfo get(WithdrawalTransaction transaction) {
         try {
+            log.info("Try to get terminal info for terminalId {}", transaction.getTerminalId());
             TerminalRef terminalRef = new TerminalRef();
             terminalRef.setId(transaction.getTerminalId());
             long domainVersionId = transaction.getDomainVersionId();
             ProviderTerminal providerTerminal =
                     partyManagementClient.computeProviderTerminal(terminalRef, domainVersionId, new Varset());
-            return converter.convert(providerTerminal);
+            RouteInfo routeInfo = converter.convert(providerTerminal);
+            log.info("Success response for terminalId {}, routeInfo {}", transaction.getTerminalId(), routeInfo);
+            return routeInfo;
         } catch (TException e) {
             log.error("WithdrawalRouteService error get terminal with id={}, version={}",
                     transaction.getTerminalId(), transaction.getDomainVersionId());

@@ -73,6 +73,3 @@ kafka:
 testcontainers:
   kafka:
     tag: '6.2.0'
-
-account-survey:
-  networkTimeout: 5000
