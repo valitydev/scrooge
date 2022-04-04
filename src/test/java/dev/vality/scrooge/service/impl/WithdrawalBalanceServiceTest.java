@@ -22,6 +22,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -31,7 +32,9 @@ import static org.mockito.Mockito.*;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {WithdrawalBalanceService.class, AccountSurveyServiceImpl.class,
         BalanceResponseToBalanceInfoConverter.class, WithdrawalRouteService.class,
-        ProviderTerminalToRouteInfoConverter.class})
+        ProviderTerminalToRouteInfoConverter.class, UrlInspector.class})
+@TestPropertySource(properties = {
+        "adapter-client.hosts=adapter-paybox,proxy-mocketbank,adapter-onevision-payout"})
 class WithdrawalBalanceServiceTest {
 
     @Autowired
@@ -63,6 +66,35 @@ class WithdrawalBalanceServiceTest {
                 assertThrows(PartyManagementException.class, () -> balanceService.update(transaction));
 
         assertEquals("WithdrawalRouteService error call party-management: ", partyManagementException.getMessage());
+    }
+
+    @Test
+    void updateWithIncorrectUrl() throws TException {
+        var providerTerminal = TestObjectFactory.testProviderTerminal();
+        String incorrectUrl = "test";
+        providerTerminal.getProxy().setUrl(incorrectUrl);
+        when(partyManagementClient.computeProviderTerminal(any(TerminalRef.class), anyLong(), any(Varset.class)))
+                .thenReturn(providerTerminal);
+        var transaction = TestObjectFactory.testWithdrawalTransaction();
+
+        IllegalArgumentException exception =
+                assertThrows(IllegalArgumentException.class, () -> balanceService.update(transaction));
+
+        assertEquals("Invalid url for adapter " + incorrectUrl, exception.getMessage());
+    }
+
+    @Test
+    void updateWithNotAvailableUrl() throws TException {
+        var providerTerminal = TestObjectFactory.testProviderTerminal();
+        providerTerminal.getProxy().setUrl("http://test:8022/v1");
+        when(partyManagementClient.computeProviderTerminal(any(TerminalRef.class), anyLong(), any(Varset.class)))
+                .thenReturn(providerTerminal);
+        var transaction = TestObjectFactory.testWithdrawalTransaction();
+
+        balanceService.update(transaction);
+
+        verify(clientBuilder, never()).build(anyString());
+        verify(accountService, never()).getBalance(any(BalanceRequest.class));
     }
 
     @Test
