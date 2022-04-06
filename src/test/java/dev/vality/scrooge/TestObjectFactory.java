@@ -3,7 +3,9 @@ package dev.vality.scrooge;
 import dev.vality.account_balance.AccountReference;
 import dev.vality.account_balance.Balance;
 import dev.vality.account_balance.BalanceResponse;
+import dev.vality.damsel.domain.ProviderRef;
 import dev.vality.damsel.domain.ProxyDefinition;
+import dev.vality.damsel.domain.TerminalRef;
 import dev.vality.damsel.payment_processing.ProviderDetails;
 import dev.vality.damsel.payment_processing.ProviderTerminal;
 import dev.vality.fistful.withdrawal.*;
@@ -13,9 +15,7 @@ import dev.vality.kafka.common.serialization.ThriftSerializer;
 import dev.vality.machinegun.eventsink.MachineEvent;
 import dev.vality.machinegun.eventsink.SinkEvent;
 import dev.vality.machinegun.msgpack.Value;
-import dev.vality.scrooge.dao.domain.tables.pojos.Adapter;
-import dev.vality.scrooge.dao.domain.tables.pojos.Option;
-import dev.vality.scrooge.dao.domain.tables.pojos.Provider;
+import dev.vality.scrooge.dao.domain.tables.pojos.*;
 import dev.vality.scrooge.domain.*;
 
 import java.time.LocalDateTime;
@@ -31,12 +31,36 @@ public abstract class TestObjectFactory {
 
     public static Provider testProvider() {
         Provider provider = new Provider();
+        provider.setProviderRef(randomInt());
         provider.setDescription(randomString());
         provider.setName(randomString());
         return provider;
     }
 
-    private static Option testOption(Long adapterId) {
+    public static Terminal testTerminal() {
+        Terminal terminal = new Terminal();
+        terminal.setTerminalRef(randomInt());
+        terminal.setDescription(randomString());
+        terminal.setName(randomString());
+        return terminal;
+    }
+
+    public static Account testAccount() {
+        Account account = new Account();
+        account.setNumber(randomString());
+        account.setCurrency(randomString());
+        return account;
+    }
+
+    public static dev.vality.scrooge.dao.domain.tables.pojos.Balance testBalance(Long accountId) {
+        var balance = new dev.vality.scrooge.dao.domain.tables.pojos.Balance();
+        balance.setValue(randomString());
+        balance.setTimestamp(LocalDateTime.now());
+        balance.setAccountId(accountId);
+        return balance;
+    }
+
+    public static Option testOption(Long adapterId) {
         Option option = new Option();
         option.setAdapterId(adapterId);
         option.setKey(randomString());
@@ -164,10 +188,12 @@ public abstract class TestObjectFactory {
     public static ProviderTerminal testProviderTerminal() {
         return new ProviderTerminal()
                 .setName(randomString())
+                .setRef(new TerminalRef().setId(randomInt()))
                 .setDescription(randomString())
                 .setProvider(new ProviderDetails()
                         .setName(randomString())
                         .setDescription(randomString())
+                        .setRef(new ProviderRef().setId(randomInt()))
                 )
                 .setProxy(new ProxyDefinition()
                         .setUrl("http://adapter-paybox:8022/v1")

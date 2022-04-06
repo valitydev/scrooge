@@ -9,6 +9,7 @@ public class TerminalInfoToTerminalConverter {
 
     public Terminal convert(TerminalInfo source, Integer providerId) {
         Terminal terminal = new Terminal();
+        terminal.setTerminalRef(source.getReferenceId());
         terminal.setName(source.getName());
         terminal.setDescription(source.getDescription());
         terminal.setProviderId(providerId);

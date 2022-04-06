@@ -11,6 +11,7 @@ public class ProviderInfoToProviderConverter implements Converter<ProviderInfo, 
     @Override
     public Provider convert(ProviderInfo source) {
         Provider provider = new Provider();
+        provider.setProviderRef(source.getReferenceId());
         provider.setName(source.getName());
         provider.setDescription(source.getDescription());
         return provider;

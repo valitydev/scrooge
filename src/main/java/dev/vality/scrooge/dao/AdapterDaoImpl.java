@@ -20,7 +20,7 @@ public class AdapterDaoImpl extends AbstractDao implements AdapterDao {
     public Adapter save(Adapter adapter) {
         Query query = getDslContext().insertInto(ADAPTER)
                 .set(getDslContext().newRecord(ADAPTER, adapter))
-                .onConflict(ADAPTER.ID)
+                .onConflict(ADAPTER.URL)
                 .doUpdate()
                 .set(getDslContext().newRecord(ADAPTER, adapter))
                 .returning(ADAPTER.ID);

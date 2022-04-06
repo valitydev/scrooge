@@ -20,7 +20,7 @@ public class AccountDaoImpl extends AbstractDao implements AccountDao {
     public Account save(Account account) {
         Query query = getDslContext().insertInto(ACCOUNT)
                 .set(getDslContext().newRecord(ACCOUNT, account))
-                .onConflict(ACCOUNT.ID)
+                .onConflict(ACCOUNT.NUMBER)
                 .doUpdate()
                 .set(getDslContext().newRecord(ACCOUNT, account))
                 .returning(ACCOUNT.ID);

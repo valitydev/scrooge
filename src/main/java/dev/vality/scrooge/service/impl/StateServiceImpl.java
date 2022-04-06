@@ -47,7 +47,7 @@ public class StateServiceImpl implements StateService {
         Account savedAccount = accountDao.save(account);
         Balance balance = balanceConverter.convert(balanceInfo, savedAccount.getId());
         balanceDao.save(balance);
-        log.info("Success update state for terminal: {}, account: {}", routeInfo.getTerminalInfo().getId(),
-                balanceInfo.getAccountId());
+        log.info("Success update state for terminal: {}, account: {}", terminal.getTerminalRef(),
+                account.getNumber());
     }
 }

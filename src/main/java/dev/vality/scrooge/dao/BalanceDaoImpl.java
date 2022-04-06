@@ -19,7 +19,7 @@ public class BalanceDaoImpl extends AbstractDao implements BalanceDao {
     public void save(Balance balance) {
         Query query = getDslContext().insertInto(BALANCE)
                 .set(getDslContext().newRecord(BALANCE, balance))
-                .onConflict(BALANCE.ID)
+                .onConflict(BALANCE.ACCOUNT_ID)
                 .doUpdate()
                 .set(getDslContext().newRecord(BALANCE, balance));
         execute(query);

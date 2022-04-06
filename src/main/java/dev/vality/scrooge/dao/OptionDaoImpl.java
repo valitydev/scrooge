@@ -24,7 +24,7 @@ public class OptionDaoImpl extends AbstractDao implements OptionDao {
                 .map(optionRecord -> getDslContext()
                         .insertInto(OPTION)
                         .set(optionRecord)
-                        .onConflict(OPTION.ID)
+                        .onConflict(OPTION.ADAPTER_ID, OPTION.KEY)
                         .doUpdate()
                         .set(getDslContext().newRecord(OPTION, optionRecord)))
                 .collect(Collectors.toList());

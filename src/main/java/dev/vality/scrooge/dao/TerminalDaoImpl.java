@@ -19,7 +19,7 @@ public class TerminalDaoImpl extends AbstractDao implements TerminalDao {
     public void save(Terminal terminal) {
         Query query = getDslContext().insertInto(TERMINAL)
                 .set(getDslContext().newRecord(TERMINAL, terminal))
-                .onConflict(TERMINAL.ID)
+                .onConflict(TERMINAL.TERMINAL_REF)
                 .doUpdate()
                 .set(getDslContext().newRecord(TERMINAL, terminal));
         execute(query);

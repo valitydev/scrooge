@@ -56,4 +56,26 @@ class OptionDaoImplTest {
 
         assertEquals(optionCount, dslContext.fetchCount(OPTION));
     }
+
+    @Test
+    void saveAllOptionForSameAdapterTwice() {
+        Provider provider = TestObjectFactory.testProvider();
+        dslContext.insertInto(PROVIDER)
+                .set(dslContext.newRecord(PROVIDER, provider))
+                .execute();
+        ProviderRecord savedProvider = dslContext.fetchAny(PROVIDER);
+        Adapter adapter = TestObjectFactory.testAdapter(savedProvider.getId());
+        dslContext.insertInto(ADAPTER)
+                .set(dslContext.newRecord(ADAPTER, adapter))
+                .execute();
+        AdapterRecord savedAdapter = dslContext.fetchAny(ADAPTER);
+        int optionCount = 3;
+        List<Option> options = TestObjectFactory.testOptions(optionCount, savedAdapter.getId());
+
+        optionDao.saveAll(options);
+        List<Option> newOptions = List.of(options.get(0), TestObjectFactory.testOption(savedAdapter.getId()));
+        optionDao.saveAll(newOptions);
+
+        assertEquals(optionCount + 1, dslContext.fetchCount(OPTION));
+    }
 }
