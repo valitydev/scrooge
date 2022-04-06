@@ -12,13 +12,14 @@ CREATE TABLE scrooge.provider
 
 CREATE TABLE scrooge.account
 (
-    id          BIGSERIAL                NOT NULL,
-    currency    CHARACTER VARYING        NOT NULL,
-    number      CHARACTER VARYING UNIQUE NOT NULL,
-    provider_id INT                      NOT NULL,
+    id          BIGSERIAL         NOT NULL,
+    currency    CHARACTER VARYING NOT NULL,
+    number      CHARACTER VARYING NOT NULL,
+    provider_id INT               NOT NULL,
 
     CONSTRAINT account_pkey PRIMARY KEY (id),
-    CONSTRAINT account_provider_f_key FOREIGN KEY (provider_id) REFERENCES scrooge.provider (id)
+    CONSTRAINT account_provider_f_key FOREIGN KEY (provider_id) REFERENCES scrooge.provider (id),
+    UNIQUE (number, provider_id)
 );
 
 CREATE TABLE scrooge.balance
@@ -46,12 +47,13 @@ CREATE TABLE scrooge.terminal
 
 CREATE TABLE scrooge.adapter
 (
-    id          BIGSERIAL                NOT NULL,
-    url         CHARACTER VARYING UNIQUE NOT NULL,
-    provider_id INT UNIQUE               NOT NULL,
+    id          BIGSERIAL         NOT NULL,
+    url         CHARACTER VARYING NOT NULL,
+    provider_id INT               NOT NULL,
 
     CONSTRAINT adapter_pkey PRIMARY KEY (id),
-    CONSTRAINT adapter_provider_f_key FOREIGN KEY (provider_id) REFERENCES scrooge.provider (id)
+    CONSTRAINT adapter_provider_f_key FOREIGN KEY (provider_id) REFERENCES scrooge.provider (id),
+    UNIQUE (url, provider_id)
 );
 
 CREATE TABLE scrooge.option
