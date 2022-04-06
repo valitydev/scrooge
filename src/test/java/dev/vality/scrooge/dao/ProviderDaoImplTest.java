@@ -38,4 +38,18 @@ class ProviderDaoImplTest {
         assertNotNull(savedProvider.getId());
         assertEquals(1, dslContext.fetchCount(PROVIDER));
     }
+
+    @Test
+    void saveSameProviderTwice() {
+        Provider provider = TestObjectFactory.testProvider();
+
+        Provider savedProvider = providerDao.save(provider);
+
+        savedProvider.setDescription("New description");
+
+        Provider newSavedProvider = providerDao.save(savedProvider);
+
+        assertEquals(savedProvider.getId(), newSavedProvider.getId());
+        assertEquals(1, dslContext.fetchCount(PROVIDER));
+    }
 }

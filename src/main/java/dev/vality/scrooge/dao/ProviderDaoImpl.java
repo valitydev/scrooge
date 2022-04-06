@@ -20,7 +20,7 @@ public class ProviderDaoImpl extends AbstractDao implements ProviderDao {
     public Provider save(Provider provider) {
         Query query = getDslContext().insertInto(PROVIDER)
                 .set(getDslContext().newRecord(PROVIDER, provider))
-                .onConflict(PROVIDER.ID)
+                .onConflict(PROVIDER.PROVIDER_REF)
                 .doUpdate()
                 .set(getDslContext().newRecord(PROVIDER, provider))
                 .returning(PROVIDER.ID);

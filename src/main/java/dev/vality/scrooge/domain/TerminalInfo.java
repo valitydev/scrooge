@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class TerminalInfo {
 
-    private String id;
+    private int referenceId;
     private String description;
     private String name;
 

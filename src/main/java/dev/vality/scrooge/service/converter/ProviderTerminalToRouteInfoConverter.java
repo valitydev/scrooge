@@ -28,11 +28,13 @@ public class ProviderTerminalToRouteInfoConverter implements Converter<ProviderT
         ProviderInfo providerInfo = new ProviderInfo();
         providerInfo.setDescription(provider.getDescription());
         providerInfo.setName(provider.getName());
+        providerInfo.setReferenceId(provider.getRef().getId());
         return providerInfo;
     }
 
     private TerminalInfo convertTerminalInfo(ProviderTerminal source) {
         TerminalInfo terminalInfo = new TerminalInfo();
+        terminalInfo.setReferenceId(source.getRef().getId());
         terminalInfo.setDescription(source.getDescription());
         terminalInfo.setName(source.getName());
         return terminalInfo;
