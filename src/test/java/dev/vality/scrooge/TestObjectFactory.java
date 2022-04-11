@@ -29,6 +29,8 @@ import java.util.stream.IntStream;
 public abstract class TestObjectFactory {
 
 
+    public static final String RUB_CURRENCY_NAME = "RUB";
+
     public static Provider testProvider() {
         Provider provider = new Provider();
         provider.setProviderRef(randomInt());
@@ -48,7 +50,7 @@ public abstract class TestObjectFactory {
     public static Account testAccount() {
         Account account = new Account();
         account.setNumber(randomString());
-        account.setCurrency(randomString());
+        account.setCurrency(RUB_CURRENCY_NAME);
         return account;
     }
 
@@ -167,7 +169,7 @@ public abstract class TestObjectFactory {
     public static BalanceInfo testBalanceInfo() {
         BalanceInfo balanceInfo = new BalanceInfo();
         balanceInfo.setTimestamp(LocalDateTime.now());
-        balanceInfo.setCurrency("RUB");
+        balanceInfo.setCurrency(RUB_CURRENCY_NAME);
         balanceInfo.setAmount(randomLong());
         balanceInfo.setAccountId(randomString());
         return balanceInfo;
