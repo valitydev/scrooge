@@ -17,6 +17,14 @@ Scrooge слушает топик mg-events-ff-withdrawal. При считыва
 
 Схема взаимодействия:
 
-![scrooge_balance.svg](doc/scrooge_balance_v4.svg)
+![scrooge_balance.svg](doc/scrooge_balance_v5.svg)
+
+Модуль также осуществляет обновление баланса адаптеров по расписанию. Для настройки периодичности обновления в сервисе
+присутствует настройка *service.renewal.cron*. Необходимо заполнить поле в формате cron-выражения. Scrooge обновляет
+балансы для существующих в БД scrooge адаптеров.
+
+Схема работы сервиса по расписанию:
+
+![scrooge_balance.svg](doc/scrooge_scheduler_balance_v1.svg)
 
 Протокол взаимодействия с адаптерами описан [тут](https://github.com/valitydev/account-balance-proto).
