@@ -45,6 +45,9 @@ party-management:
 adapter-client:
   hosts: adapter-paybox,proxy-mocketbank,adapter-onevision-payout
   networkTimeout: 5000
+service:
+  renewal:
+    cron: "-"
 
 kafka:
   bootstrap-servers: localhost:9092

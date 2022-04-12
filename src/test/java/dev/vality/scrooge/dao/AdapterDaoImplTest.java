@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.util.List;
+
 import static dev.vality.scrooge.dao.domain.tables.Adapter.ADAPTER;
 import static dev.vality.scrooge.dao.domain.tables.Provider.PROVIDER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -63,5 +65,25 @@ class AdapterDaoImplTest {
 
         assertEquals(savedAdapter.getId(), newSavedAdapter.getId());
         assertEquals(1, dslContext.fetchCount(ADAPTER));
+    }
+
+    @Test
+    void getAll() {
+        Provider provider = TestObjectFactory.testProvider();
+        dslContext.insertInto(PROVIDER)
+                .set(dslContext.newRecord(PROVIDER, provider))
+                .execute();
+        ProviderRecord savedProvider = dslContext.fetchAny(PROVIDER);
+        Adapter adapter = TestObjectFactory.testAdapter(savedProvider.getId());
+        Adapter secondAdapter = TestObjectFactory.testAdapter(savedProvider.getId());
+        dslContext.insertInto(ADAPTER)
+                .set(dslContext.newRecord(ADAPTER, adapter))
+                .newRecord()
+                .set(dslContext.newRecord(ADAPTER, secondAdapter))
+                .execute();
+
+        List<Adapter> savedAdapters = adapterDao.getAll();
+
+        assertEquals(2, savedAdapters.size());
     }
 }
