@@ -8,6 +8,7 @@ import dev.vality.scrooge.domain.BalanceInfo;
 import dev.vality.scrooge.service.AccountSurveyService;
 import dev.vality.scrooge.service.ClientBuilder;
 import dev.vality.scrooge.service.converter.BalanceResponseToBalanceInfoConverter;
+import dev.vality.woody.api.flow.error.WUnavailableResultException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.thrift.TException;
@@ -25,16 +26,16 @@ public class AccountSurveyServiceImpl implements AccountSurveyService {
     public BalanceInfo getBalance(AdapterInfo adapterInfo) {
         String url = adapterInfo.getUrl();
         try {
-            log.info("Try to get balance from {}", url);
+            log.info("Try to get balance from adapter {}", url);
             AccountServiceSrv.Iface adapterClient = clientBuilder.build(url);
             BalanceRequest request = new BalanceRequest()
                     .setOptions(adapterInfo.getOptions());
             BalanceResponse balance = adapterClient.getBalance(request);
             BalanceInfo balanceInfo = converter.convert(balance);
-            log.info("Success response from {} , balanceInfo: {}", url, balanceInfo);
+            log.info("Success response from adapter {} , balanceInfo: {}", url, balanceInfo);
             return balanceInfo;
-        } catch (TException e) {
-            log.error("AccountSurveyServiceImpl error call adapter with url={}", url, e);
+        } catch (TException | WUnavailableResultException e) {
+            log.error("Error call adapter with url={}", url, e);
             return null;
         }
     }
