@@ -49,6 +49,7 @@ public class WithdrawalService implements EventService {
     private Status getStatus(MachineEvent event) {
         return Optional.ofNullable(converter.convert(event))
                 .map(TimestampedChange::getChange)
+                .filter(Change::isSetStatusChanged)
                 .map(Change::getStatusChanged)
                 .map(StatusChange::getStatus)
                 .orElse(Status.failed(new Failed()));

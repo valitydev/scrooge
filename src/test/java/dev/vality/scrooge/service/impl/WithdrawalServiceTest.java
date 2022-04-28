@@ -64,6 +64,17 @@ class WithdrawalServiceTest {
         verify(balanceService, never()).update(any(WithdrawalTransaction.class));
     }
 
+
+    @Test
+    void handleWithAnotherChangeEvent() throws TException {
+        var machineEvent = TestObjectFactory.testMachineLimitCheckEvent();
+
+        eventService.handle(List.of(machineEvent));
+
+        verify(fistfulClient, never()).get(machineEvent.getSourceId(), new EventRange());
+        verify(balanceService, never()).update(any(WithdrawalTransaction.class));
+    }
+
     @Test
     void handleWithFistfulException() throws TException {
         var machineEvent = TestObjectFactory.testMachineEvent();
