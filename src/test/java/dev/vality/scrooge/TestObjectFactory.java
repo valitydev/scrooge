@@ -8,6 +8,9 @@ import dev.vality.damsel.domain.ProxyDefinition;
 import dev.vality.damsel.domain.TerminalRef;
 import dev.vality.damsel.payment_processing.ProviderDetails;
 import dev.vality.damsel.payment_processing.ProviderTerminal;
+import dev.vality.fistful.limit_check.Details;
+import dev.vality.fistful.limit_check.WalletDetails;
+import dev.vality.fistful.limit_check.WalletOk;
 import dev.vality.fistful.withdrawal.*;
 import dev.vality.fistful.withdrawal.status.Status;
 import dev.vality.fistful.withdrawal.status.Succeeded;
@@ -106,6 +109,28 @@ public abstract class TestObjectFactory {
                 .setChange(Change.status_changed(
                         new StatusChange().setStatus(
                                 Status.succeeded(new Succeeded()))));
+    }
+
+    public static MachineEvent testMachineLimitCheckEvent() {
+        MachineEvent machineEvent = new MachineEvent();
+        machineEvent.setSourceNs(randomString());
+        machineEvent.setEventId(randomLong());
+        machineEvent.setSourceId(randomString());
+        machineEvent.setCreatedAt(randomString());
+        machineEvent.setData(Value.bin(new ThriftSerializer<>().serialize("", testLimitCheckChange())));
+        return machineEvent;
+    }
+
+    public static TimestampedChange testLimitCheckChange() {
+        Details details = new Details();
+        WalletDetails value = new WalletDetails();
+        value.setOk(new WalletOk());
+        details.setWalletReceiver(value);
+        return new TimestampedChange()
+                .setOccuredAt("2016-03-22T06:12:27Z")
+                .setChange(Change.limit_check(
+                        new LimitCheckChange().setDetails(
+                                details)));
     }
 
     public static WithdrawalState testWithdrawalState() {
