@@ -48,6 +48,8 @@ adapter-client:
 service:
   renewal:
     cron: "-"
+    first-threshold: 60
+    second-threshold: 1440
 
 kafka:
   bootstrap-servers: localhost:9092

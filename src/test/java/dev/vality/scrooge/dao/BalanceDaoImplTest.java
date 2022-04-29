@@ -13,6 +13,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.time.LocalDateTime;
+
 import static dev.vality.scrooge.dao.domain.tables.Account.ACCOUNT;
 import static dev.vality.scrooge.dao.domain.tables.Balance.BALANCE;
 import static dev.vality.scrooge.dao.domain.tables.Provider.PROVIDER;
@@ -77,5 +79,28 @@ class BalanceDaoImplTest {
         balanceDao.save(balance);
 
         assertEquals(1, dslContext.fetchCount(BALANCE));
+    }
+
+    @Test
+    void getUpdateTimeByProvider() {
+        Provider provider = TestObjectFactory.testProvider();
+        dslContext.insertInto(PROVIDER)
+                .set(dslContext.newRecord(PROVIDER, provider))
+                .execute();
+        ProviderRecord savedProvider = dslContext.fetchAny(PROVIDER);
+        Account account = TestObjectFactory.testAccount();
+        account.setProviderId(savedProvider.getId());
+        dslContext.insertInto(ACCOUNT)
+                .set(dslContext.newRecord(ACCOUNT, account))
+                .execute();
+        AccountRecord savedAccount = dslContext.fetchAny(ACCOUNT);
+        Balance balance = TestObjectFactory.testBalance(savedAccount.getId());
+        dslContext.insertInto(BALANCE)
+                .set(dslContext.newRecord(BALANCE, balance))
+                .execute();
+
+        LocalDateTime balanceUpdateTime = balanceDao.getUpdateTimeByProvider(savedProvider.getId());
+
+        assertEquals(balance.getTimestamp(), balanceUpdateTime);
     }
 }

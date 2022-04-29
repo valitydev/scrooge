@@ -38,13 +38,7 @@ public class AdapterBalanceService implements BalanceService<Adapter> {
     @Override
     @Transactional
     public void update(Adapter adapter) {
-        String url = adapter.getUrl();
-        List<Option> options = optionDao.getAllByAdapter(adapter.getId());
-        Map<String, String> optionsMap = options.stream()
-                .collect(Collectors.toMap(Option::getKey, Option::getValue));
-        AdapterInfo adapterInfo = new AdapterInfo();
-        adapterInfo.setUrl(url);
-        adapterInfo.setOptions(optionsMap);
+        AdapterInfo adapterInfo = buildAdapterInfo(adapter);
         BalanceInfo balanceInfo = accountSurveyService.getBalance(adapterInfo);
         if (Objects.nonNull(balanceInfo)) {
             Account account = accountConverter.convert(balanceInfo, adapter.getProviderId());
@@ -53,5 +47,16 @@ public class AdapterBalanceService implements BalanceService<Adapter> {
             balanceDao.save(balance);
             log.info("Success update balance for account {}", account.getNumber());
         }
+    }
+
+    private AdapterInfo buildAdapterInfo(Adapter adapter) {
+        String url = adapter.getUrl();
+        List<Option> options = optionDao.getAllByAdapter(adapter.getId());
+        Map<String, String> optionsMap = options.stream()
+                .collect(Collectors.toMap(Option::getKey, Option::getValue));
+        AdapterInfo adapterInfo = new AdapterInfo();
+        adapterInfo.setUrl(url);
+        adapterInfo.setOptions(optionsMap);
+        return adapterInfo;
     }
 }
