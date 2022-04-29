@@ -31,15 +31,17 @@ public class BalanceRenewalService {
     public void renew() {
         log.info("Start update balances");
         List<Adapter> adapters = adapterDao.getAll();
-        adapters.forEach(adapter -> {
+        for (Adapter adapter : adapters) {
             LocalDateTime lastBalanceUpdateTime = balanceDao.getUpdateTimeByProvider(adapter.getProviderId());
+            log.info("Last balance update time for adapter {}", lastBalanceUpdateTime);
             long renewalDuration = MINUTES.between(LocalDateTime.now(), lastBalanceUpdateTime);
+            log.info("Duration is {}", renewalDuration);
             if (durationInspector.isValid(renewalDuration)) {
                 adapterBalanceService.update(adapter);
             } else {
                 log.info("Skip adapter {}", adapter.getUrl());
             }
-        });
+        }
         log.info("Finish update balances");
     }
 }
