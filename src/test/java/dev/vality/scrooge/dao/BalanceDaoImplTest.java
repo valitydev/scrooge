@@ -19,6 +19,7 @@ import static dev.vality.scrooge.dao.domain.tables.Account.ACCOUNT;
 import static dev.vality.scrooge.dao.domain.tables.Balance.BALANCE;
 import static dev.vality.scrooge.dao.domain.tables.Provider.PROVIDER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @PostgresqlJooqTest
 @ContextConfiguration(classes = {BalanceDaoImpl.class})
@@ -101,6 +102,6 @@ class BalanceDaoImplTest {
 
         LocalDateTime balanceUpdateTime = balanceDao.getUpdateTimeByProvider(savedProvider.getId());
 
-        assertEquals(balance.getTimestamp(), balanceUpdateTime);
+        assertTrue(balance.getTimestamp().isEqual(balanceUpdateTime));
     }
 }
