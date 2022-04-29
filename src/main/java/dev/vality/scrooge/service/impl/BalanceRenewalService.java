@@ -34,7 +34,7 @@ public class BalanceRenewalService {
         for (Adapter adapter : adapters) {
             LocalDateTime lastBalanceUpdateTime = balanceDao.getUpdateTimeByProvider(adapter.getProviderId());
             log.info("Last balance update time for adapter {}", lastBalanceUpdateTime);
-            long renewalDuration = MINUTES.between(LocalDateTime.now(), lastBalanceUpdateTime);
+            long renewalDuration = MINUTES.between(lastBalanceUpdateTime, LocalDateTime.now());
             log.info("Duration is {}", renewalDuration);
             if (durationInspector.isValid(renewalDuration)) {
                 adapterBalanceService.update(adapter);
