@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static java.time.temporal.ChronoUnit.MINUTES;
+import static java.time.temporal.ChronoUnit.SECONDS;
 
 @Slf4j
 @Service
@@ -34,7 +35,7 @@ public class BalanceRenewalService {
         for (Adapter adapter : adapters) {
             LocalDateTime lastBalanceUpdateTime = balanceDao.getUpdateTimeByProvider(adapter.getProviderId());
             log.info("Last balance update time for adapter {}", lastBalanceUpdateTime);
-            long renewalDuration = MINUTES.between(lastBalanceUpdateTime, LocalDateTime.now());
+            long renewalDuration = MINUTES.between(lastBalanceUpdateTime, LocalDateTime.now().truncatedTo(SECONDS));
             log.info("Duration is {}", renewalDuration);
             if (durationInspector.isValid(renewalDuration)) {
                 adapterBalanceService.update(adapter);
