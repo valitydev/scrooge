@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 @Component
@@ -24,7 +25,8 @@ public class BalanceResponseToBalanceInfoConverter implements Converter<BalanceR
         balanceInfo.setAccountId(accountReference.getId());
         LocalDateTime timestamp = Optional.ofNullable(source.getResponseTime())
                 .map(s -> LocalDateTime.parse(s, DateTimeFormatter.ISO_INSTANT))
-                .orElse(LocalDateTime.now());
+                .map(time -> time.truncatedTo(ChronoUnit.SECONDS))
+                .orElse(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
         balanceInfo.setTimestamp(timestamp);
         return balanceInfo;
     }
