@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 import static dev.vality.scrooge.dao.domain.tables.Account.ACCOUNT;
 import static dev.vality.scrooge.dao.domain.tables.Balance.BALANCE;
@@ -35,6 +36,7 @@ public class BalanceDaoImpl extends AbstractDao implements BalanceDao {
                 .from(BALANCE)
                 .join(ACCOUNT).on(BALANCE.ACCOUNT_ID.eq(ACCOUNT.ID))
                 .where(ACCOUNT.PROVIDER_ID.eq(providerId));
-        return fetchOne(where, LocalDateTime.class);
+        LocalDateTime updateTime = fetchOne(where, LocalDateTime.class);
+        return updateTime.truncatedTo(ChronoUnit.SECONDS);
     }
 }
