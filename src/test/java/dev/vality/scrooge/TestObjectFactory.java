@@ -22,6 +22,7 @@ import dev.vality.scrooge.dao.domain.tables.pojos.*;
 import dev.vality.scrooge.domain.*;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -60,7 +61,7 @@ public abstract class TestObjectFactory {
     public static dev.vality.scrooge.dao.domain.tables.pojos.Balance testBalance(Long accountId) {
         var balance = new dev.vality.scrooge.dao.domain.tables.pojos.Balance();
         balance.setValue(randomString());
-        balance.setTimestamp(LocalDateTime.now());
+        balance.setTimestamp(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
         balance.setAccountId(accountId);
         return balance;
     }
