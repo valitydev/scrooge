@@ -15,6 +15,7 @@ import dev.vality.scrooge.service.ClientBuilder;
 import dev.vality.scrooge.service.StateService;
 import dev.vality.scrooge.service.converter.BalanceResponseToBalanceInfoConverter;
 import dev.vality.scrooge.service.converter.ProviderTerminalToRouteInfoConverter;
+import dev.vality.woody.api.flow.error.WUndefinedResultException;
 import org.apache.thrift.TException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -104,6 +105,24 @@ class WithdrawalBalanceServiceTest {
                 .thenReturn(providerTerminal);
         when(clientBuilder.build(providerTerminal.getProxy().getUrl())).thenReturn(accountService);
         when(accountService.getBalance(any(BalanceRequest.class))).thenThrow(new TException("Error call"));
+        var transaction = TestObjectFactory.testWithdrawalTransaction();
+
+        balanceService.update(transaction);
+
+        verify(partyManagementClient, times(1))
+                .computeProviderTerminal(any(TerminalRef.class), anyLong(), any(Varset.class));
+        verify(accountService, times(1)).getBalance(any(BalanceRequest.class));
+        verify(stateService, times(0)).update(any(RouteInfo.class), any(BalanceInfo.class));
+    }
+
+    @Test
+    void updateWithAdapterWoodyException() throws TException {
+        var providerTerminal = TestObjectFactory.testProviderTerminal();
+        when(partyManagementClient.computeProviderTerminal(any(TerminalRef.class), anyLong(), any(Varset.class)))
+                .thenReturn(providerTerminal);
+        when(clientBuilder.build(providerTerminal.getProxy().getUrl())).thenReturn(accountService);
+        when(accountService.getBalance(any(BalanceRequest.class)))
+                .thenThrow(new WUndefinedResultException("Error call"));
         var transaction = TestObjectFactory.testWithdrawalTransaction();
 
         balanceService.update(transaction);

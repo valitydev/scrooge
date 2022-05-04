@@ -8,7 +8,7 @@ import dev.vality.scrooge.domain.BalanceInfo;
 import dev.vality.scrooge.service.AccountSurveyService;
 import dev.vality.scrooge.service.ClientBuilder;
 import dev.vality.scrooge.service.converter.BalanceResponseToBalanceInfoConverter;
-import dev.vality.woody.api.flow.error.WUnavailableResultException;
+import dev.vality.woody.api.flow.error.WRuntimeException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.thrift.TException;
@@ -34,7 +34,7 @@ public class AccountSurveyServiceImpl implements AccountSurveyService {
             BalanceInfo balanceInfo = converter.convert(balance);
             log.info("Success response from adapter {} , balanceInfo: {}", url, balanceInfo);
             return balanceInfo;
-        } catch (TException | WUnavailableResultException e) {
+        } catch (TException | WRuntimeException e) {
             log.error("Error call adapter with url={}", url, e);
             return null;
         }
