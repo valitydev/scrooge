@@ -1,8 +1,5 @@
 package dev.vality.scrooge;
 
-import dev.vality.account_balance.AccountReference;
-import dev.vality.account_balance.Balance;
-import dev.vality.account_balance.BalanceResponse;
 import dev.vality.damsel.domain.ProviderRef;
 import dev.vality.damsel.domain.ProxyDefinition;
 import dev.vality.damsel.domain.TerminalRef;

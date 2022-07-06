@@ -1,8 +1,8 @@
 package dev.vality.scrooge.service.converter;
 
-import dev.vality.account_balance.AccountReference;
-import dev.vality.account_balance.Balance;
-import dev.vality.account_balance.BalanceResponse;
+import dev.vality.scrooge.AccountReference;
+import dev.vality.scrooge.Balance;
+import dev.vality.scrooge.BalanceResponse;
 import dev.vality.scrooge.domain.BalanceInfo;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
