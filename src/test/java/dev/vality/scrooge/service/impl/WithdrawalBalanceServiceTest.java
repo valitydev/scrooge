@@ -1,10 +1,10 @@
 package dev.vality.scrooge.service.impl;
 
-import dev.vality.account_balance.AccountServiceSrv;
-import dev.vality.account_balance.BalanceRequest;
 import dev.vality.damsel.domain.TerminalRef;
 import dev.vality.damsel.payment_processing.PartyManagementSrv;
 import dev.vality.damsel.payment_processing.Varset;
+import dev.vality.scrooge.AccountServiceSrv;
+import dev.vality.scrooge.BalanceRequest;
 import dev.vality.scrooge.TestObjectFactory;
 import dev.vality.scrooge.domain.BalanceInfo;
 import dev.vality.scrooge.domain.RouteInfo;

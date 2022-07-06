@@ -30,7 +30,7 @@
         <db.user>postgres</db.user>
         <db.password>postgres</db.password>
         <db.schema>scrooge</db.schema>
-        <accout.balance.proto.version>1.12-61ea81e</accout.balance.proto.version>
+        <scrooge.proto.version>1.16-b0d5cf2</scrooge.proto.version>
         <testcontainers.annotations.version>1.4.0</testcontainers.annotations.version>
         <fistful-proto.version>1.134-cfaaf3d</fistful-proto.version>
         <machinegun-proto.version>1.24-f533965</machinegun-proto.version>
@@ -44,8 +44,8 @@
         <!--dev.vality-->
         <dependency>
             <groupId>dev.vality</groupId>
-            <artifactId>account-balance-proto</artifactId>
-            <version>${accout.balance.proto.version}</version>
+            <artifactId>scrooge-proto</artifactId>
+            <version>${scrooge.proto.version}</version>
         </dependency>
         <dependency>
             <groupId>dev.vality.woody</groupId>

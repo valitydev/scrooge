@@ -1,6 +1,6 @@
 package dev.vality.scrooge.service.impl;
 
-import dev.vality.account_balance.AccountServiceSrv;
+import dev.vality.scrooge.AccountServiceSrv;
 import dev.vality.scrooge.service.ClientBuilder;
 import dev.vality.woody.thrift.impl.http.THSpawnClientBuilder;
 import lombok.RequiredArgsConstructor;

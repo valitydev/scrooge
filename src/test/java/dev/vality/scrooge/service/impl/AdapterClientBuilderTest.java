@@ -1,6 +1,6 @@
 package dev.vality.scrooge.service.impl;
 
-import dev.vality.account_balance.AccountServiceSrv;
+import dev.vality.scrooge.AccountServiceSrv;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
