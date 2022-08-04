@@ -82,7 +82,7 @@ class BalanceDaoImplTest {
     }
 
     @Test
-    void getUpdateTimeByProvider() {
+    void getUpdateTimeByAccount() {
         Provider provider = TestObjectFactory.testProvider();
         dslContext.insertInto(PROVIDER)
                 .set(dslContext.newRecord(PROVIDER, provider))
@@ -99,7 +99,7 @@ class BalanceDaoImplTest {
                 .set(dslContext.newRecord(BALANCE, balance))
                 .execute();
 
-        LocalDateTime balanceUpdateTime = balanceDao.getUpdateTimeByProvider(savedProvider.getId());
+        LocalDateTime balanceUpdateTime = balanceDao.getUpdateTimeByAccount(savedAccount.getId());
 
         assertEquals(balance.getTimestamp(), balanceUpdateTime);
     }

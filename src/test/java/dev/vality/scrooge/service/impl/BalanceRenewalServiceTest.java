@@ -2,6 +2,7 @@ package dev.vality.scrooge.service.impl;
 
 import dev.vality.scrooge.TestObjectFactory;
 import dev.vality.scrooge.config.PostgresqlJooqTest;
+import dev.vality.scrooge.dao.AccountDaoImpl;
 import dev.vality.scrooge.dao.AdapterDaoImpl;
 import dev.vality.scrooge.dao.BalanceDaoImpl;
 import dev.vality.scrooge.dao.domain.tables.pojos.Account;
@@ -29,7 +30,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {AdapterDaoImpl.class, BalanceRenewalService.class, BalanceDaoImpl.class})
+@ContextConfiguration(classes = {AdapterDaoImpl.class, BalanceRenewalService.class, BalanceDaoImpl.class, AccountDaoImpl.class})
 @PostgresqlJooqTest
 @TestPropertySource(properties = {
         "service.renewal.cron=0/5 * * * *"})

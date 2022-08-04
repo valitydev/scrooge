@@ -1,19 +1,27 @@
 package dev.vality.scrooge.dao;
 
+import dev.vality.mapper.RecordRowMapper;
 import dev.vality.scrooge.dao.domain.tables.pojos.Account;
+import dev.vality.scrooge.dao.domain.tables.records.AccountRecord;
 import org.jooq.Query;
+import org.jooq.SelectWhereStep;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
+import java.util.List;
 
 import static dev.vality.scrooge.dao.domain.tables.Account.ACCOUNT;
 
 @Component
 public class AccountDaoImpl extends AbstractDao implements AccountDao {
 
+    private final RowMapper<Account> listRecordRowMapper;
+
     public AccountDaoImpl(DataSource dataSource) {
         super(dataSource);
+        listRecordRowMapper = new RecordRowMapper<>(ACCOUNT, Account.class);
     }
 
     @Override
@@ -28,5 +36,12 @@ public class AccountDaoImpl extends AbstractDao implements AccountDao {
         execute(query, keyHolder);
         account.setId(keyHolder.getKey().longValue());
         return account;
+    }
+
+    @Override
+    public List<Account> getAll() {
+        SelectWhereStep<AccountRecord> where = getDslContext()
+                .selectFrom(ACCOUNT);
+        return fetch(where, listRecordRowMapper);
     }
 }

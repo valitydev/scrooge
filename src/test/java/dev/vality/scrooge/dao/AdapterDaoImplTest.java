@@ -86,4 +86,22 @@ class AdapterDaoImplTest {
 
         assertEquals(2, savedAdapters.size());
     }
+
+    @Test
+    void getByProviderId() {
+        Provider provider = TestObjectFactory.testProvider();
+        dslContext.insertInto(PROVIDER)
+                .set(dslContext.newRecord(PROVIDER, provider))
+                .execute();
+        ProviderRecord savedProvider = dslContext.fetchAny(PROVIDER);
+        Adapter adapter = TestObjectFactory.testAdapter(savedProvider.getId());
+        dslContext.insertInto(ADAPTER)
+                .set(dslContext.newRecord(ADAPTER, adapter))
+                .execute();
+
+        Adapter actualAdapter = adapterDao.getByProviderId(savedProvider.getId());
+
+        assertEquals(adapter.getProviderId(), actualAdapter.getProviderId());
+        assertEquals(adapter.getUrl(), actualAdapter.getUrl());
+    }
 }
