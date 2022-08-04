@@ -40,12 +40,13 @@ public class BalanceRenewalService {
             LocalDateTime lastBalanceUpdateTime = balanceDao.getUpdateTimeByAccount(account.getId());
             log.info("Last balance update time {} for account number {}", lastBalanceUpdateTime, account.getNumber());
             long renewalDuration = MINUTES.between(lastBalanceUpdateTime, LocalDateTime.now().truncatedTo(SECONDS));
-            log.info("Duration until last balance update  is {}", renewalDuration);
+            log.info("Duration until last balance update is {} minutes for account number {}",
+                    renewalDuration, account.getNumber());
             if (durationInspector.isValid(renewalDuration)) {
                 Adapter adapter = adapterDao.getByProviderId(account.getProviderId());
                 adapterBalanceService.update(adapter);
             } else {
-                log.info("Skip account number {}", account.getNumber());
+                log.info("Skip updating for account number {}", account.getNumber());
             }
         }
         log.info("Finish update balances");
