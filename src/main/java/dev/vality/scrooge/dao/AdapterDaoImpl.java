@@ -4,6 +4,7 @@ import dev.vality.mapper.RecordRowMapper;
 import dev.vality.scrooge.dao.domain.tables.pojos.Adapter;
 import dev.vality.scrooge.dao.domain.tables.records.AdapterRecord;
 import org.jooq.Query;
+import org.jooq.SelectConditionStep;
 import org.jooq.SelectWhereStep;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -43,6 +44,14 @@ public class AdapterDaoImpl extends AbstractDao implements AdapterDao {
         SelectWhereStep<AdapterRecord> where = getDslContext()
                 .selectFrom(ADAPTER);
         return fetch(where, listRecordRowMapper);
+    }
+
+    @Override
+    public Adapter getByProviderId(Integer providerId) {
+        SelectConditionStep<AdapterRecord> where = getDslContext()
+                .selectFrom(ADAPTER)
+                .where(ADAPTER.PROVIDER_ID.eq(providerId));
+        return fetchOne(where, listRecordRowMapper);
     }
 
 

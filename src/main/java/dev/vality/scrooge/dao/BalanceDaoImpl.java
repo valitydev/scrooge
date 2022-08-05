@@ -10,7 +10,6 @@ import javax.sql.DataSource;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
-import static dev.vality.scrooge.dao.domain.tables.Account.ACCOUNT;
 import static dev.vality.scrooge.dao.domain.tables.Balance.BALANCE;
 
 @Component
@@ -31,11 +30,10 @@ public class BalanceDaoImpl extends AbstractDao implements BalanceDao {
     }
 
     @Override
-    public LocalDateTime getUpdateTimeByProvider(Integer providerId) {
+    public LocalDateTime getUpdateTimeByAccount(Long accountId) {
         SelectConditionStep<Record1<LocalDateTime>> where = getDslContext().select(BALANCE.TIMESTAMP)
                 .from(BALANCE)
-                .join(ACCOUNT).on(BALANCE.ACCOUNT_ID.eq(ACCOUNT.ID))
-                .where(ACCOUNT.PROVIDER_ID.eq(providerId));
+                .where(BALANCE.ACCOUNT_ID.eq(accountId));
         LocalDateTime updateTime = fetchOne(where, LocalDateTime.class);
         return updateTime.truncatedTo(ChronoUnit.SECONDS);
     }

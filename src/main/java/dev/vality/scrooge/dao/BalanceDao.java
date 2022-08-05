@@ -8,6 +8,6 @@ public interface BalanceDao {
 
     void save(Balance balance);
 
-    LocalDateTime getUpdateTimeByProvider(Integer providerId);
+    LocalDateTime getUpdateTimeByAccount(Long accountId);
 
 }

@@ -9,5 +9,7 @@ public interface AdapterDao {
     Adapter save(Adapter adapter);
 
     List<Adapter> getAll();
+
+    Adapter getByProviderId(Integer providerId);
 }
 

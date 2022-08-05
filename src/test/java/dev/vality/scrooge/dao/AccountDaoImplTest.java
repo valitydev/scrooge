@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.util.List;
+
 import static dev.vality.scrooge.dao.domain.tables.Account.ACCOUNT;
 import static dev.vality.scrooge.dao.domain.tables.Provider.PROVIDER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -67,5 +69,24 @@ class AccountDaoImplTest {
 
         assertEquals(savedAccount.getId(), newSavedAccount.getId());
         assertEquals(1, dslContext.fetchCount(ACCOUNT));
+    }
+
+    @Test
+    void getAll() {
+        Provider provider = TestObjectFactory.testProvider();
+        dslContext.insertInto(PROVIDER)
+                .set(dslContext.newRecord(PROVIDER, provider))
+                .execute();
+        ProviderRecord savedProvider = dslContext.fetchAny(PROVIDER);
+        Account account = TestObjectFactory.testAccount();
+        account.setProviderId(savedProvider.getId());
+        dslContext.insertInto(ACCOUNT)
+                .set(dslContext.newRecord(ACCOUNT, account))
+                .execute();
+
+        List<Account> all = accountDao.getAll();
+
+        assertEquals(1, all.size());
+        assertEquals(account.getNumber(), all.get(0).getNumber());
     }
 }
