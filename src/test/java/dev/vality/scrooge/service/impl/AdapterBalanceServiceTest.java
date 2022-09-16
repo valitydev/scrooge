@@ -17,9 +17,11 @@ import dev.vality.scrooge.domain.AdapterInfo;
 import dev.vality.scrooge.domain.BalanceInfo;
 import dev.vality.scrooge.service.AccountSurveyService;
 import dev.vality.scrooge.service.BalanceService;
+import dev.vality.scrooge.service.EncryptionService;
 import dev.vality.scrooge.service.converter.BalanceInfoToAccountConverter;
 import dev.vality.scrooge.service.converter.BalanceInfoToBalanceConverter;
 import org.jooq.DSLContext;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,7 @@ import static dev.vality.scrooge.dao.domain.tables.Balance.BALANCE;
 import static dev.vality.scrooge.dao.domain.tables.Provider.PROVIDER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
@@ -50,6 +53,14 @@ class AdapterBalanceServiceTest {
 
     @Autowired
     private DSLContext dslContext;
+
+    @MockBean
+    private EncryptionService encryptionService;
+
+    @BeforeEach
+    void setUp() {
+        when(encryptionService.encrypt(anyString())).thenReturn(TestObjectFactory.randomString());
+    }
 
     @Test
     void failedUpdate() {
