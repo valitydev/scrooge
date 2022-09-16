@@ -75,6 +75,10 @@ kafka:
         max-poll-records: 50
         concurrency: 7
 
+security:
+  key: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+  iv: 1234567890ABCDEF
+
 testcontainers:
   kafka:
     tag: '6.2.0'

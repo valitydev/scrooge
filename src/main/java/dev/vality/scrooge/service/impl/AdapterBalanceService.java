@@ -11,6 +11,7 @@ import dev.vality.scrooge.domain.AdapterInfo;
 import dev.vality.scrooge.domain.BalanceInfo;
 import dev.vality.scrooge.service.AccountSurveyService;
 import dev.vality.scrooge.service.BalanceService;
+import dev.vality.scrooge.service.EncryptionService;
 import dev.vality.scrooge.service.converter.BalanceInfoToAccountConverter;
 import dev.vality.scrooge.service.converter.BalanceInfoToBalanceConverter;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,7 @@ public class AdapterBalanceService implements BalanceService<Adapter> {
     private final AccountSurveyService accountSurveyService;
     private final BalanceInfoToAccountConverter accountConverter;
     private final BalanceInfoToBalanceConverter balanceConverter;
+    private final EncryptionService encryptionService;
 
     @Override
     @Transactional
@@ -53,7 +55,7 @@ public class AdapterBalanceService implements BalanceService<Adapter> {
         String url = adapter.getUrl();
         List<Option> options = optionDao.getAllByAdapter(adapter.getId());
         Map<String, String> optionsMap = options.stream()
-                .collect(Collectors.toMap(Option::getKey, Option::getValue));
+                .collect(Collectors.toMap(Option::getKey, option -> encryptionService.decrypt(option.getValue())));
         AdapterInfo adapterInfo = new AdapterInfo();
         adapterInfo.setUrl(url);
         adapterInfo.setOptions(optionsMap);

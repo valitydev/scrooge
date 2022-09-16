@@ -4,12 +4,15 @@ import dev.vality.scrooge.TestObjectFactory;
 import dev.vality.scrooge.config.PostgresqlJooqTest;
 import dev.vality.scrooge.dao.*;
 import dev.vality.scrooge.domain.BalanceInfo;
+import dev.vality.scrooge.service.EncryptionService;
 import dev.vality.scrooge.service.StateService;
 import dev.vality.scrooge.service.converter.*;
 import org.jooq.DSLContext;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -20,6 +23,8 @@ import static dev.vality.scrooge.dao.domain.tables.Option.OPTION;
 import static dev.vality.scrooge.dao.domain.tables.Provider.PROVIDER;
 import static dev.vality.scrooge.dao.domain.tables.Terminal.TERMINAL;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 @PostgresqlJooqTest
@@ -36,6 +41,13 @@ class StateServiceImplTest {
     @Autowired
     private StateService stateService;
 
+    @MockBean
+    private EncryptionService encryptionService;
+
+    @BeforeEach
+    void setUp() {
+        when(encryptionService.encrypt(anyString())).thenReturn(TestObjectFactory.randomString());
+    }
 
     @Test
     void update() {
