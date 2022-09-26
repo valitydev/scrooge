@@ -37,7 +37,7 @@ spring:
     consumer:
       group-id: scrooge-listner
       enable-auto-commit: false
-      auto-offset-reset: earliest
+      auto-offset-reset: latest
       max-poll-records: 20
       properties:
         max.poll.interval.ms: 60000
