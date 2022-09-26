@@ -31,6 +31,19 @@ spring:
     cache-names: adapters
     caffeine:
       spec: maximumSize=200,expireAfterAccess=1d
+  kafka:
+    bootstrap-servers: localhost:9092
+    client-id: scrooge
+    consumer:
+      group-id: scrooge-listner
+      enable-auto-commit: false
+      auto-offset-reset: earliest
+      max-poll-records: 20
+      properties:
+        max.poll.interval.ms: 60000
+        session.timeout.ms: 60000
+        reconnect.backoff.ms: 2000
+        retry.backoff.ms: 2000
 info:
   version: '@project.version@'
   stage: dev
@@ -52,21 +65,6 @@ service:
     second-threshold: 1440
 
 kafka:
-  bootstrap-servers: localhost:9092
-  client-id: scrooge
-  consumer:
-    group-id: scrooge-listner
-    max-poll-interval-ms: 60000
-    max-session-timeout-ms: 60000
-  ssl:
-    enabled: false
-    key-store-type: changeit
-    key-store-location: changeit
-    key-store-password: changeit
-    key-password: changeit
-    trust-store-type: changeit
-    trust-store-location: changeit
-    trust-store-password: changeit
   topic:
     withdrawal:
       id: mg-events-ff-withdrawal
