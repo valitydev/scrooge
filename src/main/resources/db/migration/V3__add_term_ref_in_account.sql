@@ -1,0 +1,2 @@
+ALTER TABLE scrooge.account
+    ADD COLUMN IF NOT EXISTS terminal_ref INT NOT NULL DEFAULT 0;
