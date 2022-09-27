@@ -44,6 +44,7 @@ public class StateServiceImpl implements StateService {
         List<Option> options = optionConverter.convert(routeInfo.getAdapterInfo(), savedAdapter.getId());
         optionDao.saveAll(options);
         Account account = accountConverter.convert(balanceInfo, savedProvider.getId());
+        account.setTerminalRef(terminal.getTerminalRef());
         Account savedAccount = accountDao.save(account);
         Balance balance = balanceConverter.convert(balanceInfo, savedAccount.getId());
         balanceDao.save(balance);
