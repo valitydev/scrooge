@@ -56,7 +56,7 @@ party-management:
   url: http://hellgate:8022/v1/processing/partymgmt
   networkTimeout: 5000
 adapter-client:
-  hosts: adapter-paybox,proxy-mocketbank,adapter-onevision-payout
+  hosts: adapter-paybox,proxy-mocketbank,adapter-onevision-payout,adapter-pay2me-payout
   networkTimeout: 5000
 service:
   renewal:
