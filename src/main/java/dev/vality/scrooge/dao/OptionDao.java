@@ -8,5 +8,5 @@ public interface OptionDao {
 
     void saveAll(List<Option> options);
 
-    List<Option> getAllByAdapter(Long id);
+    List<Option> getAllByAdapterAndTerminal(Long id, Integer termRef);
 }

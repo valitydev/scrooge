@@ -68,6 +68,7 @@ public abstract class TestObjectFactory {
         option.setAdapterId(adapterId);
         option.setKey(randomString());
         option.setValue(randomString());
+        option.setTerminalRef(randomInt());
         return option;
     }
 
@@ -172,6 +173,8 @@ public abstract class TestObjectFactory {
         AdapterInfo adapterInfo = new AdapterInfo();
         adapterInfo.setUrl("http://adapter:8022/v1");
         adapterInfo.setOptions(Map.of(randomString(), randomString()));
+        adapterInfo.setTermRef(randomInt());
+        adapterInfo.setProviderId(randomInt());
         return adapterInfo;
     }
 

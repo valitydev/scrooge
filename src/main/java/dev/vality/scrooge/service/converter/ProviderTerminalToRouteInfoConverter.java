@@ -20,7 +20,8 @@ public class ProviderTerminalToRouteInfoConverter implements Converter<ProviderT
         RouteInfo routeInfo = new RouteInfo();
         routeInfo.setProviderInfo(convertProviderInfo(provider));
         routeInfo.setTerminalInfo(convertTerminalInfo(source));
-        routeInfo.setAdapterInfo(convertAdapterInfo(adapter));
+        int termRef = source.getRef().getId();
+        routeInfo.setAdapterInfo(convertAdapterInfo(adapter, termRef));
         return routeInfo;
     }
 
@@ -40,10 +41,11 @@ public class ProviderTerminalToRouteInfoConverter implements Converter<ProviderT
         return terminalInfo;
     }
 
-    private AdapterInfo convertAdapterInfo(ProxyDefinition adapter) {
+    private AdapterInfo convertAdapterInfo(ProxyDefinition adapter, int termRef) {
         AdapterInfo adapterInfo = new AdapterInfo();
         adapterInfo.setOptions(adapter.getOptions());
         adapterInfo.setUrl(adapter.getUrl());
+        adapterInfo.setTermRef(termRef);
         return adapterInfo;
     }
 }

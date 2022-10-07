@@ -5,14 +5,17 @@ import dev.vality.scrooge.config.PostgresqlJooqTest;
 import dev.vality.scrooge.dao.AccountDaoImpl;
 import dev.vality.scrooge.dao.AdapterDaoImpl;
 import dev.vality.scrooge.dao.BalanceDaoImpl;
+import dev.vality.scrooge.dao.OptionDaoImpl;
 import dev.vality.scrooge.dao.domain.tables.pojos.Account;
 import dev.vality.scrooge.dao.domain.tables.pojos.Adapter;
 import dev.vality.scrooge.dao.domain.tables.pojos.Balance;
 import dev.vality.scrooge.dao.domain.tables.pojos.Provider;
 import dev.vality.scrooge.dao.domain.tables.records.AccountRecord;
 import dev.vality.scrooge.dao.domain.tables.records.ProviderRecord;
+import dev.vality.scrooge.domain.AdapterInfo;
 import dev.vality.scrooge.service.BalanceService;
 import dev.vality.scrooge.service.DurationInspector;
+import dev.vality.scrooge.service.EncryptionService;
 import org.jooq.DSLContext;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,8 +33,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {AdapterDaoImpl.class, BalanceRenewalService.class,
-        BalanceDaoImpl.class, AccountDaoImpl.class})
+@ContextConfiguration(classes = {AdapterDaoImpl.class, BalanceRenewalService.class, OptionDaoImpl.class,
+        BalanceDaoImpl.class, AccountDaoImpl.class, BalanceUpdateInspector.class, AdapterInfoBuilderImpl.class})
 @PostgresqlJooqTest
 @TestPropertySource(properties = {
         "service.renewal.cron=0/5 * * * *"})
@@ -41,10 +44,13 @@ class BalanceRenewalServiceTest {
     private BalanceRenewalService balanceRenewalService;
 
     @MockBean
-    private BalanceService<Adapter> adapterBalanceService;
+    private BalanceService<AdapterInfo> adapterBalanceService;
 
     @MockBean
     private DurationInspector durationInspector;
+
+    @MockBean
+    private EncryptionService encryptionService;
 
     @Autowired
     private DSLContext dslContext;
@@ -54,7 +60,7 @@ class BalanceRenewalServiceTest {
 
         balanceRenewalService.renew();
 
-        verify(adapterBalanceService, never()).update(any(Adapter.class));
+        verify(adapterBalanceService, never()).update(any(AdapterInfo.class));
     }
 
     @Test
@@ -83,7 +89,7 @@ class BalanceRenewalServiceTest {
 
         balanceRenewalService.renew();
 
-        verify(adapterBalanceService, times(0)).update(any(Adapter.class));
+        verify(adapterBalanceService, times(0)).update(any(AdapterInfo.class));
     }
 
     @Test
@@ -108,10 +114,11 @@ class BalanceRenewalServiceTest {
                 .set(dslContext.newRecord(BALANCE, balance))
                 .execute();
         when(durationInspector.isValid(anyLong())).thenReturn(true);
+        when(encryptionService.decrypt(anyString())).thenReturn(TestObjectFactory.randomString());
 
 
         balanceRenewalService.renew();
 
-        verify(adapterBalanceService, times(1)).update(any(Adapter.class));
+        verify(adapterBalanceService, times(1)).update(any(AdapterInfo.class));
     }
 }

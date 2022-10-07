@@ -82,7 +82,7 @@ class OptionDaoImplTest {
     }
 
     @Test
-    void getAllByAdapter() {
+    void getAllByAdapterAndTermRef() {
         Provider provider = TestObjectFactory.testProvider();
         dslContext.insertInto(PROVIDER)
                 .set(dslContext.newRecord(PROVIDER, provider))
@@ -96,8 +96,11 @@ class OptionDaoImplTest {
                 .set(dslContext.newRecord(ADAPTER, secondAdapter))
                 .execute();
         Result<Record> adapters = dslContext.select().from(ADAPTER).fetch();
-        int optionCount = 2;
+        int optionCount = 3;
+        int termRef = TestObjectFactory.randomInt();
         List<Option> options = TestObjectFactory.testOptions(optionCount, adapters.get(0).get(ADAPTER.ID));
+        options.get(0).setTerminalRef(termRef);
+        options.get(1).setTerminalRef(termRef);
         List<Option> optionsForSecondAdapter =
                 TestObjectFactory.testOptions(optionCount, adapters.get(1).get(ADAPTER.ID));
         dslContext.insertInto(OPTION)
@@ -110,8 +113,8 @@ class OptionDaoImplTest {
                 .set(dslContext.newRecord(OPTION, optionsForSecondAdapter.get(1)))
                 .execute();
 
-        List<Option> optionsByAdapter = optionDao.getAllByAdapter(adapters.get(0).get(ADAPTER.ID));
+        List<Option> optionsByAdapter = optionDao.getAllByAdapterAndTerminal(adapters.get(0).get(ADAPTER.ID), termRef);
 
-        assertEquals(optionCount, optionsByAdapter.size());
+        assertEquals(optionCount - 1, optionsByAdapter.size());
     }
 }
