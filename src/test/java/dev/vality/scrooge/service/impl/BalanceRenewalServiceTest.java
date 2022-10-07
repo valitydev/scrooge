@@ -34,7 +34,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {AdapterDaoImpl.class, BalanceRenewalService.class, OptionDaoImpl.class,
-        BalanceDaoImpl.class, AccountDaoImpl.class, BalanceUpdateInspector.class, AdapterInfoBuilderImpl.class})
+        BalanceDaoImpl.class, AccountDaoImpl.class, BalanceUpdateInspector.class, AdapterInfoServiceImpl.class})
 @PostgresqlJooqTest
 @TestPropertySource(properties = {
         "service.renewal.cron=0/5 * * * *"})

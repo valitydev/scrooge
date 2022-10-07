@@ -3,7 +3,7 @@ package dev.vality.scrooge.service.impl;
 import dev.vality.scrooge.dao.AccountDao;
 import dev.vality.scrooge.dao.domain.tables.pojos.Account;
 import dev.vality.scrooge.domain.AdapterInfo;
-import dev.vality.scrooge.service.AdapterInfoBuilder;
+import dev.vality.scrooge.service.AdapterInfoService;
 import dev.vality.scrooge.service.BalanceService;
 import dev.vality.scrooge.service.Inspector;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class BalanceRenewalService {
 
     private final AccountDao accountDao;
     private final Inspector<Account> balanceUpdateInspector;
-    private final AdapterInfoBuilder adapterInfoBuilder;
+    private final AdapterInfoService adapterInfoService;
     private final BalanceService<AdapterInfo> adapterBalanceService;
 
     @Scheduled(cron = "${service.renewal.cron}")
@@ -34,7 +34,7 @@ public class BalanceRenewalService {
                     account.getNumber(), account.getTerminalRef());
             if (balanceUpdateInspector.isSuitable(account)) {
                 AdapterInfo adapterInfo =
-                        adapterInfoBuilder.build(account.getProviderId(), account.getTerminalRef());
+                        adapterInfoService.get(account.getProviderId(), account.getTerminalRef());
                 adapterBalanceService.update(adapterInfo);
             } else {
                 log.info("Skip updating for account number {}", account.getNumber());
