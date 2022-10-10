@@ -75,10 +75,6 @@ class AdapterBalanceServiceTest {
         dslContext.insertInto(BALANCE)
                 .set(dslContext.newRecord(BALANCE, balance))
                 .execute();
-//        Adapter adapter = TestObjectFactory.testAdapter(savedProvider.getId());
-//        dslContext.insertInto(ADAPTER)
-//                .set(dslContext.newRecord(ADAPTER, adapter))
-//                .execute();
         when(accountSurveyService.getBalance(any(AdapterInfo.class))).thenReturn(null);
         AdapterInfo adapterInfo = TestObjectFactory.testAdapterInfo();
         adapterInfo.setProviderId(savedProvider.getId());
@@ -108,10 +104,6 @@ class AdapterBalanceServiceTest {
         dslContext.insertInto(BALANCE)
                 .set(dslContext.newRecord(BALANCE, balance))
                 .execute();
-//        Adapter adapter = TestObjectFactory.testAdapter(savedProvider.getId());
-//        dslContext.insertInto(ADAPTER)
-//                .set(dslContext.newRecord(ADAPTER, adapter))
-//                .execute();
         BalanceInfo balanceInfo = TestObjectFactory.testBalanceInfo();
         balanceInfo.setAccountId(account.getNumber());
         AdapterInfo adapterInfo = TestObjectFactory.testAdapterInfo();
