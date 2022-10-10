@@ -7,11 +7,11 @@ import dev.vality.scrooge.domain.AdapterInfo;
 import dev.vality.scrooge.domain.BalanceInfo;
 import dev.vality.scrooge.service.AccountSurveyService;
 import dev.vality.scrooge.service.ClientBuilder;
-import dev.vality.scrooge.service.converter.BalanceResponseToBalanceInfoConverter;
 import dev.vality.woody.api.flow.error.WRuntimeException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.thrift.TException;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 public class AccountSurveyServiceImpl implements AccountSurveyService {
 
     private final ClientBuilder<AccountServiceSrv.Iface> clientBuilder;
-    private final BalanceResponseToBalanceInfoConverter converter;
+    private final Converter<BalanceResponse, BalanceInfo> converter;
 
     @Override
     public BalanceInfo getBalance(AdapterInfo adapterInfo) {

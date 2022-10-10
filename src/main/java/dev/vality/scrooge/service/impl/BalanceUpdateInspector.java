@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 
 import static java.time.temporal.ChronoUnit.MINUTES;
-import static java.time.temporal.ChronoUnit.SECONDS;
 
 @Slf4j
 @Service
@@ -25,7 +24,7 @@ public class BalanceUpdateInspector implements Inspector<Account> {
     public boolean isSuitable(Account account) {
         LocalDateTime lastBalanceUpdateTime = balanceDao.getUpdateTimeByAccount(account.getId());
         log.info("Last balance update time {} for account number {}", lastBalanceUpdateTime, account.getNumber());
-        long renewalDuration = MINUTES.between(lastBalanceUpdateTime, LocalDateTime.now().truncatedTo(SECONDS));
+        long renewalDuration = MINUTES.between(lastBalanceUpdateTime, LocalDateTime.now().truncatedTo(MINUTES));
         log.info("Duration until last balance update is {} minutes for account number {}",
                 renewalDuration, account.getNumber());
         return durationInspector.isValid(renewalDuration);

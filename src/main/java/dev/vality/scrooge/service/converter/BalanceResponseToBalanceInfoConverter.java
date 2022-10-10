@@ -25,8 +25,8 @@ public class BalanceResponseToBalanceInfoConverter implements Converter<BalanceR
         balanceInfo.setAccountId(accountReference.getId());
         LocalDateTime timestamp = Optional.ofNullable(source.getResponseTime())
                 .map(s -> LocalDateTime.parse(s, DateTimeFormatter.ISO_INSTANT))
-                .map(time -> time.truncatedTo(ChronoUnit.SECONDS))
-                .orElse(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
+                .map(time -> time.truncatedTo(ChronoUnit.MINUTES))
+                .orElse(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES));
         balanceInfo.setTimestamp(timestamp);
         return balanceInfo;
     }
