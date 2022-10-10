@@ -22,6 +22,7 @@ public class AdapterInfoToOptionConverter {
                     option.setKey(optionEntry.getKey());
                     option.setValue(encryptionService.encrypt(optionEntry.getValue()));
                     option.setAdapterId(adapterId);
+                    option.setTerminalRef(source.getTermRef());
                     return option;
                 })
                 .collect(Collectors.toList());

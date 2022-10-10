@@ -11,4 +11,6 @@ public class AdapterInfo {
     @ToString.Exclude
     private Map<String, String> options;
     private String url;
+    private Integer termRef;
+    private Integer providerId;
 }

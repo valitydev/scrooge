@@ -31,7 +31,7 @@ public class OptionDaoImpl extends AbstractDao implements OptionDao {
                 .map(optionRecord -> getDslContext()
                         .insertInto(OPTION)
                         .set(optionRecord)
-                        .onConflict(OPTION.ADAPTER_ID, OPTION.KEY)
+                        .onConflict(OPTION.ADAPTER_ID, OPTION.KEY, OPTION.TERMINAL_REF)
                         .doUpdate()
                         .set(getDslContext().newRecord(OPTION, optionRecord)))
                 .collect(Collectors.toList());
@@ -39,10 +39,11 @@ public class OptionDaoImpl extends AbstractDao implements OptionDao {
     }
 
     @Override
-    public List<Option> getAllByAdapter(Long id) {
+    public List<Option> getAllByAdapterAndTerminal(Long id, Integer termRef) {
         SelectConditionStep<OptionRecord> where = getDslContext()
                 .selectFrom(OPTION)
-                .where(OPTION.ADAPTER_ID.eq(id));
+                .where(OPTION.ADAPTER_ID.eq(id)
+                        .and(OPTION.TERMINAL_REF.eq(termRef)));
         return fetch(where, listRecordRowMapper);
     }
 }
