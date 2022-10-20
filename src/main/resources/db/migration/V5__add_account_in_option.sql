@@ -1,0 +1,2 @@
+ALTER TABLE scrooge.option
+    ADD COLUMN IF NOT EXISTS account_id BIGINT NOT NULL DEFAULT 0;

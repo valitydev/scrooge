@@ -3,6 +3,7 @@ package dev.vality.scrooge.dao;
 import dev.vality.mapper.RecordRowMapper;
 import dev.vality.scrooge.dao.domain.tables.pojos.Option;
 import dev.vality.scrooge.dao.domain.tables.records.OptionRecord;
+import dev.vality.scrooge.domain.AccountInfo;
 import org.jooq.Query;
 import org.jooq.SelectConditionStep;
 import org.springframework.jdbc.core.RowMapper;
@@ -39,11 +40,12 @@ public class OptionDaoImpl extends AbstractDao implements OptionDao {
     }
 
     @Override
-    public List<Option> getAllByAdapterAndTerminal(Long id, Integer termRef) {
+    public List<Option> getAllByAccount(AccountInfo accountInfo) {
         SelectConditionStep<OptionRecord> where = getDslContext()
                 .selectFrom(OPTION)
-                .where(OPTION.ADAPTER_ID.eq(id)
-                        .and(OPTION.TERMINAL_REF.eq(termRef)));
+                .where(OPTION.ADAPTER_ID.eq(accountInfo.getAdapterId())
+                        .and(OPTION.TERMINAL_REF.eq(accountInfo.getTermRef()))
+                        .and(OPTION.ACCOUNT_ID.eq(accountInfo.getAccountId())));
         return fetch(where, listRecordRowMapper);
     }
 }

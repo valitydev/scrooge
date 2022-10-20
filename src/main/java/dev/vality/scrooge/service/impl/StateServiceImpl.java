@@ -41,11 +41,14 @@ public class StateServiceImpl implements StateService {
         terminalDao.save(terminal);
         Adapter adapter = adapterConverter.convert(routeInfo.getAdapterInfo(), savedProvider.getId());
         Adapter savedAdapter = adapterDao.save(adapter);
-        List<Option> options = optionConverter.convert(routeInfo.getAdapterInfo(), savedAdapter.getId());
-        optionDao.saveAll(options);
         Account account = accountConverter.convert(balanceInfo, savedProvider.getId());
         account.setTerminalRef(terminal.getTerminalRef());
         Account savedAccount = accountDao.save(account);
+        List<Option> options = optionConverter.convert(
+                routeInfo.getAdapterInfo(),
+                savedAdapter.getId(),
+                savedAccount.getId());
+        optionDao.saveAll(options);
         Balance balance = balanceConverter.convert(balanceInfo, savedAccount.getId());
         balanceDao.save(balance);
         log.info("Success update state for terminal: {}, account: {}", terminal.getTerminalRef(),
