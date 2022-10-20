@@ -32,7 +32,7 @@ public class OptionDaoImpl extends AbstractDao implements OptionDao {
                 .map(optionRecord -> getDslContext()
                         .insertInto(OPTION)
                         .set(optionRecord)
-                        .onConflict(OPTION.ADAPTER_ID, OPTION.KEY, OPTION.TERMINAL_REF)
+                        .onConflict(OPTION.ADAPTER_ID, OPTION.KEY, OPTION.TERMINAL_REF, OPTION.ACCOUNT_ID)
                         .doUpdate()
                         .set(getDslContext().newRecord(OPTION, optionRecord)))
                 .collect(Collectors.toList());
