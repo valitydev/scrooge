@@ -34,7 +34,7 @@ public class BalanceRenewalService {
                     account.getNumber(), account.getTerminalRef());
             if (balanceUpdateInspector.isSuitable(account)) {
                 AdapterInfo adapterInfo =
-                        adapterInfoService.get(account.getProviderId(), account.getTerminalRef());
+                        adapterInfoService.getByAccount(account);
                 adapterBalanceService.update(adapterInfo);
             } else {
                 log.info("Skip updating for account number {}", account.getNumber());

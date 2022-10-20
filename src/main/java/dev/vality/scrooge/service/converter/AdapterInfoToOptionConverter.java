@@ -15,7 +15,7 @@ public class AdapterInfoToOptionConverter {
 
     private final EncryptionService encryptionService;
 
-    public List<Option> convert(AdapterInfo source, Long adapterId) {
+    public List<Option> convert(AdapterInfo source, Long adapterId, Long accountId) {
         return source.getOptions().entrySet().stream()
                 .map(optionEntry -> {
                     Option option = new Option();
@@ -23,6 +23,7 @@ public class AdapterInfoToOptionConverter {
                     option.setValue(encryptionService.encrypt(optionEntry.getValue()));
                     option.setAdapterId(adapterId);
                     option.setTerminalRef(source.getTermRef());
+                    option.setAccountId(accountId);
                     return option;
                 })
                 .collect(Collectors.toList());

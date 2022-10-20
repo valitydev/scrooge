@@ -63,18 +63,19 @@ public abstract class TestObjectFactory {
         return balance;
     }
 
-    public static Option testOption(Long adapterId) {
+    public static Option testOption(Long adapterId, Long accountId) {
         Option option = new Option();
         option.setAdapterId(adapterId);
         option.setKey(randomString());
         option.setValue(randomString());
         option.setTerminalRef(randomInt());
+        option.setAccountId(accountId);
         return option;
     }
 
-    public static List<Option> testOptions(int i, Long adapterId) {
+    public static List<Option> testOptions(int i, Long adapterId, Long accountId) {
         return IntStream.rangeClosed(1, i)
-                .mapToObj(value -> testOption(adapterId))
+                .mapToObj(value -> testOption(adapterId, accountId))
                 .collect(Collectors.toList());
     }
 
