@@ -6,11 +6,11 @@
     <parent>
         <groupId>dev.vality</groupId>
         <artifactId>service-parent-pom</artifactId>
-        <version>1.0.18</version>
+        <version>1.0.20</version>
     </parent>
 
     <artifactId>scrooge</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <packaging>jar</packaging>
 
     <name>scrooge</name>
@@ -30,13 +30,13 @@
         <db.user>postgres</db.user>
         <db.password>postgres</db.password>
         <db.schema>scrooge</db.schema>
-        <scrooge.proto.version>1.16-b0d5cf2</scrooge.proto.version>
+        <scrooge.proto.version>1.16-b0d51.19-bf0f65a</scrooge.proto.version>
         <testcontainers.annotations.version>1.4.3</testcontainers.annotations.version>
-        <fistful-proto.version>1.134-cfaaf3d</fistful-proto.version>
-        <machinegun-proto.version>1.24-f533965</machinegun-proto.version>
+        <fistful-proto.version>1.134-cfa1.161-c9c3aa0</fistful-proto.version>
+        <machinegun-proto.version>1.24-f5331.41-96f7f11</machinegun-proto.version>
         <sink-common-lib.version>0.0.1</sink-common-lib.version>
-        <damsel.version>1.553-25dfce3</damsel.version>
-        <shedlock-provider-jdbc-template.version>4.34.0</shedlock-provider-jdbc-template.version>
+        <damsel.version>1.553-25d1.606-f718741</damsel.version>
+        <shedlock-provider-jdbc-template.version>4.34.0</s4.46.0
     </properties>
 
     <dependencies>
@@ -319,7 +319,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-remote-resources-plugin</artifactId>
-                <version>1.6.0</version>
+                <version>1.7.0</version>
                 <dependencies>
                     <dependency>
                         <groupId>org.apache.maven.shared</groupId>
