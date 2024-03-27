@@ -30,7 +30,7 @@
         <db.user>postgres</db.user>
         <db.password>postgres</db.password>
         <db.schema>scrooge</db.schema>
-        <scrooge.proto.version>1.16-b0d5cf2</scrooge.proto.version>
+        <scrooge.proto.version>1.20-9171884</scrooge.proto.version>
         <testcontainers.annotations.version>1.4.3</testcontainers.annotations.version>
         <fistful-proto.version>1.134-cfaaf3d</fistful-proto.version>
         <machinegun-proto.version>1.24-f533965</machinegun-proto.version>
@@ -88,6 +88,11 @@
             <groupId>dev.vality</groupId>
             <artifactId>damsel</artifactId>
             <version>${damsel.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>dev.vality.geck</groupId>
+            <artifactId>common</artifactId>
+            <version>0.0.1</version>
         </dependency>
 
         <!--spring-->
