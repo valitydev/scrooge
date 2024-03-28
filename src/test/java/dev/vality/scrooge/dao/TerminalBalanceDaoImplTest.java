@@ -56,10 +56,10 @@ class TerminalBalanceDaoImplTest {
 
     @Test
     void mappingTest() {
-        var provider = createProvider();
-        var terminal = createTerminal(provider.getId());
-        var account = createAccount(provider.getId());
-        var balance = createBalance(account.getId());
+        final var provider = createProvider();
+        final var terminal = createTerminal(provider.getId());
+        final var account = createAccount(provider.getId());
+        final var balance = createBalance(account.getId());
 
         var result = terminalBalanceDao.getAllTerminalBalances();
         assertEquals(1, result.size());

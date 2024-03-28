@@ -14,9 +14,9 @@ import static dev.vality.scrooge.dao.domain.Tables.*;
 @Component
 public class TerminalBalanceDaoImpl extends AbstractDao implements TerminalBalanceDao {
 
-    public final static String ACCOUNT_ID = "ACCOUNT_ID";
-    public final static String TERMINAL_ID = "TERMINAL_ID";
-    public final static String TERMINAL_NAME = "TERMINAL_NAME";
+    public static final String ACCOUNT_ID = "ACCOUNT_ID";
+    public static final String TERMINAL_ID = "TERMINAL_ID";
+    public static final String TERMINAL_NAME = "TERMINAL_NAME";
 
     private final TerminalBalanceMapper terminalBalanceMapper;
 
