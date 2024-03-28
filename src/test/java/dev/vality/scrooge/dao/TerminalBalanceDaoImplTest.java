@@ -100,6 +100,15 @@ class TerminalBalanceDaoImplTest {
         assertEquals(1, result.size());
     }
 
+    @Test
+    void npeTest() {
+        var provider = createProvider();
+        createTerminal(provider.getId());
+
+        var result = terminalBalanceDao.getAllTerminalBalances();
+        assertEquals(1, result.size());
+    }
+
     private void createTestRow() {
         var provider = createProvider();
         var terminal = createTerminal(provider.getId());

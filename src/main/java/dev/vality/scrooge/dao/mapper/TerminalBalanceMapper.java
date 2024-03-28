@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import static dev.vality.scrooge.dao.TerminalBalanceDaoImpl.TERMINAL_ID;
 import static dev.vality.scrooge.dao.TerminalBalanceDaoImpl.TERMINAL_NAME;
@@ -34,7 +35,9 @@ public class TerminalBalanceMapper implements RowMapper<TerminalBalance> {
         return new TerminalBalance()
                 .setAccountId(rs.getString(ACCOUNT.NUMBER.getName()))
                 .setLastUpdated(
-                        TypeUtil.temporalToString(rs.getObject(BALANCE.TIMESTAMP.getName(), LocalDateTime.class)))
+                        Optional.ofNullable(rs.getObject(BALANCE.TIMESTAMP.getName(), LocalDateTime.class))
+                                .map(TypeUtil::temporalToString)
+                                .orElse(null))
                 .setTerminal(terminal)
                 .setBalance(balance)
                 .setProvider(provider);
