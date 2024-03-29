@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class TerminalBalanceHandlerTest {
 
     @Autowired
-    private TerminalServiceSrv.Iface requestHandler;
+    private TerminalBalanceHandler requestHandler;
 
     @MockBean
     private TerminalBalanceDao terminalBalanceDao;
