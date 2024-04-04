@@ -34,9 +34,8 @@ public class TerminalBalanceDaoImpl extends AbstractDao implements TerminalBalan
                         .leftJoin(PROVIDER).on(PROVIDER.ID.eq(TERMINAL.PROVIDER_ID))
                         .leftJoin(ACCOUNT).on(PROVIDER.ID.eq(ACCOUNT.PROVIDER_ID))
                         .leftJoin(BALANCE).on(ACCOUNT.ID.eq(BALANCE.ACCOUNT_ID)))
+                .where(PROVIDER.ID.isNotNull().and(ACCOUNT.ID.isNotNull()))
                 .orderBy(PROVIDER.ID.desc());
         return fetch(query, terminalBalanceMapper);
     }
-
-
 }

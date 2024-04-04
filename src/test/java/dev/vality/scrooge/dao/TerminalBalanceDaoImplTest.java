@@ -104,6 +104,7 @@ class TerminalBalanceDaoImplTest {
     void npeTest() {
         var provider = createProvider();
         createTerminal(provider.getId());
+        createAccount(provider.getId());
 
         var result = terminalBalanceDao.getAllTerminalBalances();
         assertEquals(1, result.size());
