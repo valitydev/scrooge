@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>scrooge</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <packaging>jar</packaging>
 
     <name>scrooge</name>
@@ -30,7 +30,7 @@
         <db.user>postgres</db.user>
         <db.password>postgres</db.password>
         <db.schema>scrooge</db.schema>
-        <scrooge.proto.version>1.21-7edece1</scrooge.proto.version>
+        <scrooge.proto.version>1.23-aa3bf23</scrooge.proto.version>
         <testcontainers.annotations.version>1.4.3</testcontainers.annotations.version>
         <fistful-proto.version>1.134-cfaaf3d</fistful-proto.version>
         <machinegun-proto.version>1.24-f533965</machinegun-proto.version>
