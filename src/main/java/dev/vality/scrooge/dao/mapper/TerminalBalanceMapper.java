@@ -28,9 +28,10 @@ public class TerminalBalanceMapper implements RowMapper<TerminalBalance> {
                 .setId(rs.getString(PROVIDER.ID.getName()))
                 .setName(rs.getString(PROVIDER.NAME.getName()));
 
-        var balance = new Balance()
-                .setAmount(rs.getString(BALANCE.VALUE.getName()))
-                .setCurrencyCode(rs.getString(ACCOUNT.CURRENCY.getName()));
+        var currencyCode = rs.getString(ACCOUNT.CURRENCY.getName());
+        var balance = Optional.ofNullable(rs.getString(BALANCE.VALUE.getName())).map(amount ->
+                new Balance().setAmount(amount).setCurrencyCode(currencyCode)).orElse(null);
+
 
         return new TerminalBalance()
                 .setAccountId(rs.getString(ACCOUNT.NUMBER.getName()))
