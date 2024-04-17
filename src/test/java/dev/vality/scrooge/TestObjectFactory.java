@@ -57,7 +57,7 @@ public abstract class TestObjectFactory {
 
     public static dev.vality.scrooge.dao.domain.tables.pojos.Balance testBalance(Long accountId) {
         var balance = new dev.vality.scrooge.dao.domain.tables.pojos.Balance();
-        balance.setValue(randomString());
+        balance.setValue(randomLong().toString());
         balance.setTimestamp(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
         balance.setAccountId(accountId);
         return balance;

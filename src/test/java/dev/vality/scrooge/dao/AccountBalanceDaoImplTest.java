@@ -6,7 +6,7 @@ import dev.vality.scrooge.dao.domain.tables.pojos.Account;
 import dev.vality.scrooge.dao.domain.tables.pojos.Balance;
 import dev.vality.scrooge.dao.domain.tables.pojos.Provider;
 import dev.vality.scrooge.dao.domain.tables.records.TerminalRecord;
-import dev.vality.scrooge.dao.mapper.TerminalBalanceMapper;
+import dev.vality.scrooge.dao.mapper.AccountBalanceMapper;
 import org.jooq.DSLContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,9 +23,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @PostgresqlJooqTest
 @ContextConfiguration(classes = {
         ProviderDaoImpl.class, TerminalDaoImpl.class, AccountDaoImpl.class,
-        BalanceDaoImpl.class, TerminalBalanceDaoImpl.class, TerminalBalanceMapper.class
+        BalanceDaoImpl.class, AccountBalanceDaoImpl.class, AccountBalanceMapper.class
 })
-class TerminalBalanceDaoImplTest {
+class AccountBalanceDaoImplTest {
 
     @Autowired
     private ProviderDao providerDao;
@@ -40,7 +40,7 @@ class TerminalBalanceDaoImplTest {
     private BalanceDao balanceDao;
 
     @Autowired
-    private TerminalBalanceDao terminalBalanceDao;
+    private AccountBalanceDao accountBalanceDao;
 
     @Autowired
     private DSLContext dslContext;
@@ -61,7 +61,7 @@ class TerminalBalanceDaoImplTest {
         final var account = createAccount(provider.getId());
         final var balance = createBalance(account.getId());
 
-        var result = terminalBalanceDao.getAllTerminalBalances();
+        var result = accountBalanceDao.getAllAccountBalances();
         assertEquals(1, result.size());
 
         var terminalBalance = result.iterator().next();
@@ -70,7 +70,7 @@ class TerminalBalanceDaoImplTest {
         assertEquals(terminal.getName(), terminalBalance.getTerminal().getName());
         assertEquals(provider.getId().toString(), terminalBalance.getProvider().getId());
         assertEquals(provider.getName(), terminalBalance.getProvider().getName());
-        assertEquals(balance.getValue(), terminalBalance.getBalance().getAmount());
+        assertEquals(balance.getValue(), String.valueOf(terminalBalance.getBalance().getAmount()));
         assertEquals(account.getCurrency(), terminalBalance.getBalance().getCurrencyCode());
     }
 
@@ -79,7 +79,7 @@ class TerminalBalanceDaoImplTest {
         createTestRow();
         createTestRow();
 
-        var result = terminalBalanceDao.getAllTerminalBalances();
+        var result = accountBalanceDao.getAllAccountBalances();
         assertEquals(2, result.size());
 
         var iterator = result.iterator();
@@ -96,7 +96,7 @@ class TerminalBalanceDaoImplTest {
         var account = createAccount(provider.getId());
         var balance = createBalance(account.getId());
 
-        var result = terminalBalanceDao.getAllTerminalBalances();
+        var result = accountBalanceDao.getAllAccountBalances();
         assertEquals(1, result.size());
     }
 
@@ -106,7 +106,7 @@ class TerminalBalanceDaoImplTest {
         createTerminal(provider.getId());
         createAccount(provider.getId());
 
-        var result = terminalBalanceDao.getAllTerminalBalances();
+        var result = accountBalanceDao.getAllAccountBalances();
         assertEquals(1, result.size());
     }
 
