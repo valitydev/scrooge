@@ -1,6 +1,6 @@
 package dev.vality.scrooge.endpoint;
 
-import dev.vality.scrooge.terminal.balance.TerminalServiceSrv;
+import dev.vality.scrooge.account.AccountServiceSrv;
 import dev.vality.woody.thrift.impl.http.THServiceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,12 +14,12 @@ public class TerminalBalanceServlet extends GenericServlet {
     private Servlet thriftServlet;
 
     @Autowired
-    private TerminalServiceSrv.Iface requestHandler;
+    private AccountServiceSrv.Iface requestHandler;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        thriftServlet = new THServiceBuilder().build(TerminalServiceSrv.Iface.class, requestHandler);
+        thriftServlet = new THServiceBuilder().build(AccountServiceSrv.Iface.class, requestHandler);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package dev.vality.scrooge.dao;
 
-import dev.vality.scrooge.dao.mapper.TerminalBalanceMapper;
-import dev.vality.scrooge.terminal.balance.TerminalBalance;
+import dev.vality.scrooge.dao.mapper.AccountBalanceMapper;
+import dev.vality.scrooge.account.AccountBalance;
 import org.jooq.Query;
 import org.springframework.stereotype.Component;
 
@@ -12,21 +12,21 @@ import static dev.vality.scrooge.dao.domain.Tables.*;
 
 
 @Component
-public class TerminalBalanceDaoImpl extends AbstractDao implements TerminalBalanceDao {
+public class AccountBalanceDaoImpl extends AbstractDao implements AccountBalanceDao {
 
     public static final String ACCOUNT_ID = "ACCOUNT_ID";
     public static final String TERMINAL_ID = "TERMINAL_ID";
     public static final String TERMINAL_NAME = "TERMINAL_NAME";
 
-    private final TerminalBalanceMapper terminalBalanceMapper;
+    private final AccountBalanceMapper accountBalanceMapper;
 
-    public TerminalBalanceDaoImpl(DataSource dataSource, TerminalBalanceMapper terminalBalanceMapper) {
+    public AccountBalanceDaoImpl(DataSource dataSource, AccountBalanceMapper accountBalanceMapper) {
         super(dataSource);
-        this.terminalBalanceMapper = terminalBalanceMapper;
+        this.accountBalanceMapper = accountBalanceMapper;
     }
 
     @Override
-    public List<TerminalBalance> getAllTerminalBalances() {
+    public List<AccountBalance> getAllAccountBalances() {
         Query query = getDslContext().select(PROVIDER.ID, PROVIDER.NAME, ACCOUNT.ID.as(ACCOUNT_ID), ACCOUNT.CURRENCY,
                         ACCOUNT.NUMBER, TERMINAL.ID.as(TERMINAL_ID), TERMINAL.NAME.as(TERMINAL_NAME),
                         BALANCE.VALUE, BALANCE.TIMESTAMP)
@@ -36,6 +36,6 @@ public class TerminalBalanceDaoImpl extends AbstractDao implements TerminalBalan
                         .leftJoin(BALANCE).on(ACCOUNT.ID.eq(BALANCE.ACCOUNT_ID)))
                 .where(PROVIDER.ID.isNotNull().and(ACCOUNT.ID.isNotNull()))
                 .orderBy(PROVIDER.ID.desc());
-        return fetch(query, terminalBalanceMapper);
+        return fetch(query, accountBalanceMapper);
     }
 }

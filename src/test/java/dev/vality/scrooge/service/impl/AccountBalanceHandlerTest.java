@@ -1,9 +1,8 @@
 package dev.vality.scrooge.service.impl;
 
-import dev.vality.scrooge.dao.TerminalBalanceDao;
-import dev.vality.scrooge.service.TerminalBalanceHandler;
-import dev.vality.scrooge.terminal.balance.TerminalBalance;
-import dev.vality.scrooge.terminal.balance.TerminalServiceSrv;
+import dev.vality.scrooge.dao.AccountBalanceDao;
+import dev.vality.scrooge.service.AccountBalanceHandler;
+import dev.vality.scrooge.account.AccountBalance;
 import org.apache.thrift.TException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,19 +18,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {TerminalBalanceHandler.class})
-public class TerminalBalanceHandlerTest {
+@ContextConfiguration(classes = {AccountBalanceHandler.class})
+public class AccountBalanceHandlerTest {
 
     @Autowired
-    private TerminalBalanceHandler requestHandler;
+    private AccountBalanceHandler requestHandler;
 
     @MockBean
-    private TerminalBalanceDao terminalBalanceDao;
+    private AccountBalanceDao accountBalanceDao;
 
     @Test
     void getTerminalBalancesTest() throws TException {
-        Mockito.when(terminalBalanceDao.getAllTerminalBalances()).thenReturn(List.of(new TerminalBalance()));
-        var result = requestHandler.getTerminalBalances();
+        Mockito.when(accountBalanceDao.getAllAccountBalances()).thenReturn(List.of(new AccountBalance()));
+        var result = requestHandler.getAccountBalances();
         assertNotNull(result);
         assertNotNull(result.getBalances());
         assertEquals(1, result.getBalances().size());
