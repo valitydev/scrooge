@@ -29,13 +29,13 @@ public class AccountBalanceDaoImpl extends AbstractDao implements AccountBalance
     public List<AccountBalance> getAllAccountBalances() {
         Query query = getDslContext().select(PROVIDER.ID, PROVIDER.NAME, ACCOUNT.ID.as(ACCOUNT_ID), ACCOUNT.CURRENCY,
                         ACCOUNT.NUMBER, TERMINAL.ID.as(TERMINAL_ID), TERMINAL.NAME.as(TERMINAL_NAME),
-                        BALANCE.VALUE, BALANCE.TIMESTAMP)
+                        BALANCE.VALUE, BALANCE.TIMESTAMP, PROVIDER.PROVIDER_REF, TERMINAL.TERMINAL_REF)
                 .from(TERMINAL
                         .leftJoin(PROVIDER).on(PROVIDER.ID.eq(TERMINAL.PROVIDER_ID))
                         .leftJoin(ACCOUNT).on(PROVIDER.ID.eq(ACCOUNT.PROVIDER_ID))
                         .leftJoin(BALANCE).on(ACCOUNT.ID.eq(BALANCE.ACCOUNT_ID)))
                 .where(PROVIDER.ID.isNotNull().and(ACCOUNT.ID.isNotNull()))
-                .orderBy(PROVIDER.ID.desc());
+                .orderBy(TERMINAL.TERMINAL_REF.desc());
         return fetch(query, accountBalanceMapper);
     }
 }

@@ -66,9 +66,9 @@ class AccountBalanceDaoImplTest {
 
         var terminalBalance = result.iterator().next();
         assertEquals(account.getNumber(), terminalBalance.getAccountId());
-        assertEquals(terminal.getId().toString(), terminalBalance.getTerminal().getId());
+        assertEquals(terminal.getTerminalRef().toString(), terminalBalance.getTerminal().getId());
         assertEquals(terminal.getName(), terminalBalance.getTerminal().getName());
-        assertEquals(provider.getId().toString(), terminalBalance.getProvider().getId());
+        assertEquals(provider.getProviderRef().toString(), terminalBalance.getProvider().getId());
         assertEquals(provider.getName(), terminalBalance.getProvider().getName());
         assertEquals(balance.getValue(), String.valueOf(terminalBalance.getBalance().getAmount()));
         assertEquals(account.getCurrency(), terminalBalance.getBalance().getCurrencyCode());

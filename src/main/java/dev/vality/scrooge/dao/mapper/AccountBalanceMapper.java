@@ -22,10 +22,10 @@ public class AccountBalanceMapper implements RowMapper<AccountBalance> {
     @Override
     public AccountBalance mapRow(ResultSet rs, int rowNum) throws SQLException {
         var terminal = new Terminal()
-                .setId(rs.getString(TERMINAL_ID))
+                .setId(rs.getString(TERMINAL.TERMINAL_REF.getName()))
                 .setName(rs.getString(TERMINAL_NAME));
         var provider = new Provider()
-                .setId(rs.getString(PROVIDER.ID.getName()))
+                .setId(rs.getString(PROVIDER.PROVIDER_REF.getName()))
                 .setName(rs.getString(PROVIDER.NAME.getName()));
 
         var currencyCode = rs.getString(ACCOUNT.CURRENCY.getName());
