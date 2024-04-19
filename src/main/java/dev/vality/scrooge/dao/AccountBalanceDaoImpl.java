@@ -35,7 +35,7 @@ public class AccountBalanceDaoImpl extends AbstractDao implements AccountBalance
                         .leftJoin(ACCOUNT).on(PROVIDER.ID.eq(ACCOUNT.PROVIDER_ID))
                         .leftJoin(BALANCE).on(ACCOUNT.ID.eq(BALANCE.ACCOUNT_ID)))
                 .where(PROVIDER.ID.isNotNull().and(ACCOUNT.ID.isNotNull()))
-                .orderBy(PROVIDER.ID.desc());
+                .orderBy(TERMINAL.TERMINAL_REF.desc());
         return fetch(query, accountBalanceMapper);
     }
 }
