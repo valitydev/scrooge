@@ -8,6 +8,6 @@ public interface AccountDao {
 
     Account save(Account account);
 
-    List<Account> getAll();
+    List<Account> getAllActive();
 
 }

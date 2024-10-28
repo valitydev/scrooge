@@ -4,7 +4,7 @@ import dev.vality.mapper.RecordRowMapper;
 import dev.vality.scrooge.dao.domain.tables.pojos.Account;
 import dev.vality.scrooge.dao.domain.tables.records.AccountRecord;
 import org.jooq.Query;
-import org.jooq.SelectWhereStep;
+import org.jooq.SelectConditionStep;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Component;
@@ -39,9 +39,10 @@ public class AccountDaoImpl extends AbstractDao implements AccountDao {
     }
 
     @Override
-    public List<Account> getAll() {
-        SelectWhereStep<AccountRecord> where = getDslContext()
-                .selectFrom(ACCOUNT);
+    public List<Account> getAllActive() {
+        SelectConditionStep<AccountRecord> where = getDslContext()
+                .selectFrom(ACCOUNT)
+                .where(ACCOUNT.ACTIVE.eq(Boolean.TRUE));
         return fetch(where, listRecordRowMapper);
     }
 }

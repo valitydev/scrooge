@@ -28,7 +28,7 @@ public class BalanceRenewalService {
     @SchedulerLock(name = "balance_renewal_process")
     public void renew() {
         log.info("Start update balances");
-        List<Account> accounts = accountDao.getAll();
+        List<Account> accounts = accountDao.getAllActive();
         for (Account account : accounts) {
             log.info("Try update balance for account with number: {}, terminal: {}",
                     account.getNumber(), account.getTerminalRef());

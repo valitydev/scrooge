@@ -12,6 +12,7 @@ public class BalanceInfoToAccountConverter {
         account.setCurrency(source.getCurrency());
         account.setNumber(source.getAccountId());
         account.setProviderId(providerId);
+        account.setActive(Boolean.TRUE);
         return account;
     }
 }
