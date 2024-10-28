@@ -35,7 +35,7 @@ public class AccountSurveyServiceImpl implements AccountSurveyService {
             log.info("Success response from adapter {} , balanceInfo: {}", url, balanceInfo);
             return balanceInfo;
         } catch (TException | WRuntimeException e) {
-            log.error("Error call adapter with url={}", url, e);
+            log.warn("Error call adapter with url={}, error: {}", url, e.getMessage());
             return null;
         }
     }

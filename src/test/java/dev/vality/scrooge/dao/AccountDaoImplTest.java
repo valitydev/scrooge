@@ -84,7 +84,7 @@ class AccountDaoImplTest {
                 .set(dslContext.newRecord(ACCOUNT, account))
                 .execute();
 
-        List<Account> all = accountDao.getAll();
+        List<Account> all = accountDao.getAllActive();
 
         assertEquals(1, all.size());
         assertEquals(account.getNumber(), all.get(0).getNumber());
