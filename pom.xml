@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>scrooge</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>scrooge</name>
@@ -32,7 +32,7 @@
         <db.schema>scrooge</db.schema>
         <scrooge.proto.version>1.25-9ce7fc6</scrooge.proto.version>
         <testcontainers.annotations.version>1.4.3</testcontainers.annotations.version>
-        <fistful-proto.version>1.134-cfaaf3d</fistful-proto.version>
+        <fistful-proto.version>1.179-54f1d58</fistful-proto.version>
         <machinegun-proto.version>1.24-f533965</machinegun-proto.version>
         <sink-common-lib.version>0.0.1</sink-common-lib.version>
         <damsel.version>1.553-25dfce3</damsel.version>
