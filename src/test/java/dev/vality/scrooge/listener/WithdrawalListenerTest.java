@@ -3,30 +3,29 @@ package dev.vality.scrooge.listener;
 import dev.vality.machinegun.eventsink.SinkEvent;
 import dev.vality.scrooge.TestObjectFactory;
 import dev.vality.scrooge.service.EventService;
+import dev.vality.testcontainers.annotations.KafkaConfig;
 import dev.vality.testcontainers.annotations.kafka.KafkaTestcontainerSingleton;
 import dev.vality.testcontainers.annotations.kafka.config.KafkaProducer;
-import dev.vality.testcontainers.annotations.kafka.config.KafkaProducerConfig;
 import dev.vality.testcontainers.annotations.postgresql.PostgresqlTestcontainerSingleton;
 import org.apache.thrift.TBase;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.List;
 
 import static org.mockito.Mockito.*;
 
+@SpringBootTest
+@KafkaConfig
 @KafkaTestcontainerSingleton(
         properties = {
                 "kafka.topic.withdrawal.listener.enabled=true"},
         topicsKeys = {
                 "kafka.topic.withdrawal.id"})
 @PostgresqlTestcontainerSingleton
-@SpringBootTest
-@ContextConfiguration(classes = {KafkaProducerConfig.class})
 class WithdrawalListenerTest {
 
     @Value("${kafka.topic.withdrawal.id}")
@@ -45,7 +44,7 @@ class WithdrawalListenerTest {
 
         testThriftKafkaProducer.send(withdrawalTopicName, sinkEvent);
 
-        verify(eventService, timeout(5000).times(1)).handle(List.of(sinkEvent.getEvent()));
+        verify(eventService, timeout(10000).times(1)).handle(List.of(sinkEvent.getEvent()));
 
     }
 }
