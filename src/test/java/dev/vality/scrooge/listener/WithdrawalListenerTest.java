@@ -22,7 +22,8 @@ import static org.mockito.Mockito.*;
 @KafkaConfig
 @KafkaTestcontainerSingleton(
         properties = {
-                "kafka.topic.withdrawal.listener.enabled=true"},
+                "kafka.topic.withdrawal.listener.enabled=true",
+                "spring.kafka.consumer.auto-offset-reset=earliest"},
         topicsKeys = {
                 "kafka.topic.withdrawal.id"})
 @PostgresqlTestcontainerSingleton
@@ -44,7 +45,7 @@ class WithdrawalListenerTest {
 
         testThriftKafkaProducer.send(withdrawalTopicName, sinkEvent);
 
-        verify(eventService, timeout(10000).times(1)).handle(List.of(sinkEvent.getEvent()));
+        verify(eventService, timeout(5000).times(1)).handle(List.of(sinkEvent.getEvent()));
 
     }
 }
