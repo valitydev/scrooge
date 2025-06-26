@@ -31,6 +31,9 @@ spring:
     cache-names: adapters
     caffeine:
       spec: maximumSize=200,expireAfterAccess=1d
+  datasource:
+    hikari:
+      maximum-pool-size: 2
   kafka:
     bootstrap-servers: localhost:9092
     client-id: scrooge
