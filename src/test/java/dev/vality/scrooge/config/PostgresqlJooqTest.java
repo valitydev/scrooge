@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@PostgresqlTestcontainerSingleton
+@PostgresqlTestcontainerSingleton(excludeTruncateTables = "schema_version")
 @JooqTest
 public @interface PostgresqlJooqTest {
 }

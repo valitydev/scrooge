@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
 @SpringBootTest
-@PostgresqlTestcontainerSingleton
+@PostgresqlTestcontainerSingleton(excludeTruncateTables = "schema_version")
 class EncryptionServiceImplTest {
 
     @Autowired

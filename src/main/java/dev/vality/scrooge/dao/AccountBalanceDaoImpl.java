@@ -1,7 +1,7 @@
 package dev.vality.scrooge.dao;
 
-import dev.vality.scrooge.dao.mapper.AccountBalanceMapper;
 import dev.vality.scrooge.account.AccountBalance;
+import dev.vality.scrooge.dao.mapper.AccountBalanceMapper;
 import org.jooq.Query;
 import org.springframework.stereotype.Component;
 

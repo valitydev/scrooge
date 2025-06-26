@@ -1,9 +1,9 @@
 package dev.vality.scrooge.service;
 
 import dev.vality.fistful.fistful_stat.InvalidRequest;
-import dev.vality.scrooge.dao.AccountBalanceDao;
 import dev.vality.scrooge.account.AccountBalanceResponse;
 import dev.vality.scrooge.account.AccountServiceSrv;
+import dev.vality.scrooge.dao.AccountBalanceDao;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.thrift.TException;

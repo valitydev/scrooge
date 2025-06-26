@@ -24,6 +24,18 @@ management:
 spring:
   application:
     name: '@project.name@'
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: org.postgresql.Driver
+    url: ${db.url}
+    username: ${db.user}
+    password: ${db.password}
+    hikari:
+      idle-timeout: 30000
+      maximum-pool-size: 5
+  flyway:
+    table: schema_version
+    schemas: ${db.schema}
   output:
     ansi:
       enabled: always
@@ -31,16 +43,13 @@ spring:
     cache-names: adapters
     caffeine:
       spec: maximumSize=200,expireAfterAccess=1d
-  datasource:
-    hikari:
-      maximum-pool-size: 2
   kafka:
     bootstrap-servers: localhost:9092
     client-id: scrooge
     consumer:
       group-id: scrooge-listner
       enable-auto-commit: false
-      auto-offset-reset: latest
+      auto-offset-reset: earliest
       max-poll-records: 20
       properties:
         max.poll.interval.ms: 60000

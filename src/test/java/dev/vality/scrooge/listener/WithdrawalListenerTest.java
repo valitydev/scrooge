@@ -22,11 +22,10 @@ import static org.mockito.Mockito.*;
 @KafkaConfig
 @KafkaTestcontainerSingleton(
         properties = {
-                "kafka.topic.withdrawal.listener.enabled=true",
-                "spring.kafka.consumer.auto-offset-reset=earliest"},
+                "kafka.topic.withdrawal.listener.enabled=true"},
         topicsKeys = {
                 "kafka.topic.withdrawal.id"})
-@PostgresqlTestcontainerSingleton
+@PostgresqlTestcontainerSingleton(excludeTruncateTables = "schema_version")
 class WithdrawalListenerTest {
 
     @Value("${kafka.topic.withdrawal.id}")

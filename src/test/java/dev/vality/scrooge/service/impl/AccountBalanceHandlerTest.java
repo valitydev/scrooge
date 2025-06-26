@@ -1,8 +1,8 @@
 package dev.vality.scrooge.service.impl;
 
+import dev.vality.scrooge.account.AccountBalance;
 import dev.vality.scrooge.dao.AccountBalanceDao;
 import dev.vality.scrooge.service.AccountBalanceHandler;
-import dev.vality.scrooge.account.AccountBalance;
 import org.apache.thrift.TException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
