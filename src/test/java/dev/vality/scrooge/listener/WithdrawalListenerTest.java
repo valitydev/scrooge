@@ -3,10 +3,10 @@ package dev.vality.scrooge.listener;
 import dev.vality.machinegun.eventsink.SinkEvent;
 import dev.vality.scrooge.TestObjectFactory;
 import dev.vality.scrooge.service.EventService;
-import dev.vality.testcontainers.annotations.kafka.KafkaTestcontainer;
+import dev.vality.testcontainers.annotations.kafka.KafkaTestcontainerSingleton;
 import dev.vality.testcontainers.annotations.kafka.config.KafkaProducer;
 import dev.vality.testcontainers.annotations.kafka.config.KafkaProducerConfig;
-import dev.vality.testcontainers.annotations.postgresql.PostgresqlTestcontainer;
+import dev.vality.testcontainers.annotations.postgresql.PostgresqlTestcontainerSingleton;
 import org.apache.thrift.TBase;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +19,12 @@ import java.util.List;
 
 import static org.mockito.Mockito.*;
 
-@KafkaTestcontainer(
+@KafkaTestcontainerSingleton(
         properties = {
                 "kafka.topic.withdrawal.listener.enabled=true"},
         topicsKeys = {
                 "kafka.topic.withdrawal.id"})
-@PostgresqlTestcontainer
+@PostgresqlTestcontainerSingleton
 @SpringBootTest
 @ContextConfiguration(classes = {KafkaProducerConfig.class})
 class WithdrawalListenerTest {
