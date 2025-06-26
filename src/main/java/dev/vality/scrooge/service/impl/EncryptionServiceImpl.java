@@ -4,7 +4,7 @@ import dev.vality.scrooge.config.properties.SecurityProperties;
 import dev.vality.scrooge.exception.EncryptionException;
 import dev.vality.scrooge.service.EncryptionService;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.codec.binary.Base64;
+import org.apache.hc.client5.http.utils.Base64;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.Cipher;

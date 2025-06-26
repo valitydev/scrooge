@@ -20,9 +20,9 @@ import org.jooq.DSLContext;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static dev.vality.scrooge.dao.domain.tables.Account.ACCOUNT;
@@ -43,13 +43,13 @@ class BalanceRenewalServiceTest {
     @Autowired
     private BalanceRenewalService balanceRenewalService;
 
-    @MockBean
+    @MockitoBean
     private BalanceService<AdapterInfo> adapterBalanceService;
 
-    @MockBean
+    @MockitoBean
     private DurationInspector durationInspector;
 
-    @MockBean
+    @MockitoBean
     private EncryptionService encryptionService;
 
     @Autowired

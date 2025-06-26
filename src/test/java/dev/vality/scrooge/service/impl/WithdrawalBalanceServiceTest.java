@@ -21,9 +21,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -41,13 +41,13 @@ class WithdrawalBalanceServiceTest {
     @Autowired
     private BalanceService<WithdrawalTransaction> balanceService;
 
-    @MockBean
+    @MockitoBean
     private ClientBuilder<AccountServiceSrv.Iface> clientBuilder;
 
-    @MockBean
+    @MockitoBean
     private StateService stateService;
 
-    @MockBean
+    @MockitoBean
     private PartyManagementSrv.Iface partyManagementClient;
 
     private AccountServiceSrv.Iface accountService;
