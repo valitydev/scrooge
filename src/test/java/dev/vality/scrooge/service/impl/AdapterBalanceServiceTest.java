@@ -22,8 +22,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static dev.vality.scrooge.dao.domain.tables.Account.ACCOUNT;
@@ -44,13 +44,13 @@ class AdapterBalanceServiceTest {
     @Autowired
     private BalanceService<AdapterInfo> adapterBalanceService;
 
-    @MockBean
+    @MockitoBean
     private AccountSurveyService accountSurveyService;
 
     @Autowired
     private DSLContext dslContext;
 
-    @MockBean
+    @MockitoBean
     private EncryptionService encryptionService;
 
     @BeforeEach

@@ -15,8 +15,8 @@ import org.apache.thrift.TException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
@@ -36,10 +36,10 @@ class WithdrawalServiceTest {
     @Autowired
     private EventService eventService;
 
-    @MockBean
+    @MockitoBean
     private BalanceService<WithdrawalTransaction> balanceService;
 
-    @MockBean
+    @MockitoBean
     private ManagementSrv.Iface fistfulClient;
 
     @Test

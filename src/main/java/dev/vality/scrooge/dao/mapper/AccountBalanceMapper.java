@@ -13,7 +13,6 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import static dev.vality.scrooge.dao.AccountBalanceDaoImpl.TERMINAL_ID;
 import static dev.vality.scrooge.dao.AccountBalanceDaoImpl.TERMINAL_NAME;
 import static dev.vality.scrooge.dao.domain.Tables.*;
 

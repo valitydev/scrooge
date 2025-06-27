@@ -6,7 +6,7 @@
     <parent>
         <groupId>dev.vality</groupId>
         <artifactId>service-parent-pom</artifactId>
-        <version>1.0.18</version>
+        <version>3.1.1</version>
     </parent>
 
     <artifactId>scrooge</artifactId>
@@ -19,7 +19,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>15</java.version>
         <server.port>8022</server.port>
         <management.port>8023</management.port>
         <exposed.ports>${server.port} ${management.port}</exposed.ports>
@@ -31,12 +30,11 @@
         <db.password>postgres</db.password>
         <db.schema>scrooge</db.schema>
         <scrooge.proto.version>1.25-9ce7fc6</scrooge.proto.version>
-        <testcontainers.annotations.version>1.4.3</testcontainers.annotations.version>
-        <fistful-proto.version>1.134-cfaaf3d</fistful-proto.version>
-        <machinegun-proto.version>1.24-f533965</machinegun-proto.version>
+        <testcontainers.annotations.version>3.2.0</testcontainers.annotations.version>
+        <fistful-proto.version>1.180-8b04c7f</fistful-proto.version>
+        <machinegun-proto.version>1.43-3decc8f</machinegun-proto.version>
         <sink-common-lib.version>0.0.1</sink-common-lib.version>
-        <damsel.version>1.553-25dfce3</damsel.version>
-        <shedlock-provider-jdbc-template.version>4.34.0</shedlock-provider-jdbc-template.version>
+        <shedlock-provider-jdbc-template.version>6.9.0</shedlock-provider-jdbc-template.version>
     </properties>
 
     <dependencies>
@@ -50,10 +48,7 @@
         <dependency>
             <groupId>dev.vality.woody</groupId>
             <artifactId>woody-thrift</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>dev.vality</groupId>
-            <artifactId>shared-resources</artifactId>
+            <version>${woody.version}</version>
         </dependency>
         <dependency>
             <groupId>dev.vality</groupId>
@@ -87,12 +82,10 @@
         <dependency>
             <groupId>dev.vality</groupId>
             <artifactId>damsel</artifactId>
-            <version>${damsel.version}</version>
         </dependency>
         <dependency>
             <groupId>dev.vality.geck</groupId>
             <artifactId>common</artifactId>
-            <version>0.0.1</version>
         </dependency>
 
         <!--spring-->
@@ -142,8 +135,8 @@
             <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -153,6 +146,10 @@
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-database-postgresql</artifactId>
         </dependency>
         <dependency>
             <groupId>com.zaxxer</groupId>
@@ -186,12 +183,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.junit.vintage</groupId>
-                    <artifactId>junit-vintage-engine</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>dev.vality</groupId>
@@ -324,12 +315,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-remote-resources-plugin</artifactId>
-                <version>1.6.0</version>
+                <version>3.2.0</version>
                 <dependencies>
                     <dependency>
                         <groupId>org.apache.maven.shared</groupId>
                         <artifactId>maven-filtering</artifactId>
-                        <version>1.3</version>
+                        <version>3.3.2</version>
                     </dependency>
                 </dependencies>
                 <configuration>
