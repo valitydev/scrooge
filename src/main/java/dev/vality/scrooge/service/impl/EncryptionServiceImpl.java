@@ -4,7 +4,6 @@ import dev.vality.scrooge.config.properties.SecurityProperties;
 import dev.vality.scrooge.exception.EncryptionException;
 import dev.vality.scrooge.service.EncryptionService;
 import lombok.RequiredArgsConstructor;
-import org.apache.hc.client5.http.utils.Base64;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.Cipher;
@@ -14,6 +13,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.security.spec.AlgorithmParameterSpec;
+import java.util.Base64;
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +30,7 @@ public class EncryptionServiceImpl implements EncryptionService {
         try {
             Cipher cipher = Cipher.getInstance(PADDING);
             cipher.init(Cipher.ENCRYPT_MODE, makeKey(properties.getKey()), makeIv(properties.getIv()));
-            return new String(Base64.encodeBase64(cipher.doFinal(payload.getBytes())));
+            return new String(Base64.getEncoder().encode(cipher.doFinal(payload.getBytes())));
         } catch (Exception ex) {
             throw new EncryptionException("Error while encrypt", ex);
         }
@@ -38,7 +38,7 @@ public class EncryptionServiceImpl implements EncryptionService {
 
     private static Key makeKey(String encryptionKey) {
         try {
-            byte[] key = Base64.decodeBase64(encryptionKey);
+            byte[] key = Base64.getDecoder().decode(encryptionKey);
             return new SecretKeySpec(key, ALGORITHM);
         } catch (Exception ex) {
             throw new EncryptionException("Error while create encryption key", ex);
@@ -58,7 +58,7 @@ public class EncryptionServiceImpl implements EncryptionService {
         try {
             Cipher cipher = Cipher.getInstance(PADDING);
             cipher.init(Cipher.DECRYPT_MODE, makeKey(properties.getKey()), makeIv(properties.getIv()));
-            return new String(cipher.doFinal(Base64.decodeBase64(encryptedPayload)));
+            return new String(cipher.doFinal(Base64.getDecoder().decode(encryptedPayload)));
         } catch (Exception ex) {
             throw new EncryptionException("Error while decrypt", ex);
         }
