@@ -6,7 +6,7 @@
     <parent>
         <groupId>dev.vality</groupId>
         <artifactId>service-parent-pom</artifactId>
-        <version>3.1.1</version>
+        <version>3.1.4</version>
     </parent>
 
     <artifactId>scrooge</artifactId>
@@ -17,6 +17,7 @@
     <description>Account balance survey service</description>
 
     <properties>
+        <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <server.port>8022</server.port>
@@ -44,11 +45,6 @@
             <groupId>dev.vality</groupId>
             <artifactId>scrooge-proto</artifactId>
             <version>${scrooge.proto.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>dev.vality.woody</groupId>
-            <artifactId>woody-thrift</artifactId>
-            <version>${woody.version}</version>
         </dependency>
         <dependency>
             <groupId>dev.vality</groupId>
@@ -248,6 +244,7 @@
             <plugin>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-codegen-maven</artifactId>
+                <version>${jooq.version}</version>
                 <configuration>
                     <jdbc>
                         <driver>org.postgresql.Driver</driver>
@@ -287,7 +284,7 @@
             <plugin>
                 <groupId>dev.vality.maven.plugins</groupId>
                 <artifactId>pg-embedded-plugin</artifactId>
-                <version>1.0.1</version>
+                <version>2.0.0</version>
                 <configuration>
                     <port>${db.port}</port>
                     <dbName>${db.name}</dbName>
