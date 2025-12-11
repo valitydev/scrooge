@@ -3,7 +3,7 @@ package dev.vality.scrooge.listener;
 import dev.vality.machinegun.eventsink.SinkEvent;
 import dev.vality.scrooge.TestObjectFactory;
 import dev.vality.scrooge.service.EventService;
-import dev.vality.testcontainers.annotations.KafkaConfig;
+import dev.vality.testcontainers.annotations.KafkaTestConfig;
 import dev.vality.testcontainers.annotations.kafka.KafkaTestcontainerSingleton;
 import dev.vality.testcontainers.annotations.kafka.config.KafkaProducer;
 import dev.vality.testcontainers.annotations.postgresql.PostgresqlTestcontainerSingleton;
@@ -19,7 +19,7 @@ import java.util.List;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-@KafkaConfig
+@KafkaTestConfig
 @KafkaTestcontainerSingleton(
         properties = {
                 "kafka.topic.withdrawal.listener.enabled=true"},
