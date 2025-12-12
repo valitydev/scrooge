@@ -84,6 +84,11 @@
             <groupId>dev.vality.geck</groupId>
             <artifactId>common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>dev.vality</groupId>
+            <artifactId>vault-client</artifactId>
+            <version>0.0.3</version>
+        </dependency>
 
         <!--spring-->
         <dependency>
@@ -120,6 +125,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jooq</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.vault</groupId>
+            <artifactId>spring-vault-core</artifactId>
+            <version>3.1.2</version>
         </dependency>
 
         <!--third party-->
@@ -335,6 +345,22 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>21</source>
+                    <target>21</target>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>1.18.36</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
             </plugin>
         </plugins>
     </build>

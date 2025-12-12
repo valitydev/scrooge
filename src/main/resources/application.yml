@@ -85,9 +85,9 @@ kafka:
         max-poll-records: 50
         concurrency: 7
 
-security:
-  key: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-  iv: 1234567890ABCDEF
+vault:
+  uri: https://vault.com:443
+  token: token
 
 testcontainers:
   kafka:
