@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>scrooge</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>scrooge</name>
@@ -129,7 +129,7 @@
         <dependency>
             <groupId>org.springframework.vault</groupId>
             <artifactId>spring-vault-core</artifactId>
-            <version>3.1.2</version>
+            <version>4.0.0</version>
         </dependency>
 
         <!--third party-->
