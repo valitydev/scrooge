@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>scrooge</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>scrooge</name>
@@ -35,7 +35,7 @@
         <fistful-proto.version>1.180-8b04c7f</fistful-proto.version>
         <machinegun-proto.version>1.43-3decc8f</machinegun-proto.version>
         <sink-common-lib.version>0.0.1</sink-common-lib.version>
-        <shedlock-provider-jdbc-template.version>6.9.0</shedlock-provider-jdbc-template.version>
+        <shedlock-provider-jdbc-template.version>7.5.0</shedlock-provider-jdbc-template.version>
     </properties>
 
     <dependencies>
