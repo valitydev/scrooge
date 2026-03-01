@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>scrooge</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>scrooge</name>
@@ -78,7 +78,7 @@
         <dependency>
             <groupId>dev.vality</groupId>
             <artifactId>damsel</artifactId>
-            <version>1.678-09e4c72</version>
+            <version>1.685-5c25c2e</version>
         </dependency>
         <dependency>
             <groupId>dev.vality.geck</groupId>
